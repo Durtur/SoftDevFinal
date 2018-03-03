@@ -1,0 +1,63 @@
+/*
+ * Color scheme: 
+ */
+
+/*This class defines the color variables and general style*/
+.root{
+    
+/*    Fiddle around with this to find a cool style*/
+    -fx-base: rgb(200, 200, 200);
+    -fx-background: rgb(255, 255, 255);
+    -fx-color:white;
+    
+}
+
+.search_button {
+    -fx-font:16px Tahoma;
+/*    -fx-font-weight:bold;*/
+    -fx-background-color:#ED6B18;
+    -fx-border-radius:0;
+    -fx-width:85;
+    -fx-height:31;
+
+
+}
+
+.float_left{
+    -fx-margin-left:40;
+}
+
+.header {
+    -fx-font: 100px Tahoma;
+    -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%);
+/*    -fx-stroke: black;*/
+    -fx-stroke-width: 2;
+}
+
+.body{
+/*    -fx-background-color:#005154;*/
+}
+
+.checkbox{
+
+}
+
+.search_button:hover {
+    -fx-background-color:#A13F00;
+}
+
+.search_input{
+
+
+}
+
+/*
+Class for the panes that contain the listed flights on the booking page. 
+*/
+.bookable_flight_pane{
+    -fx-border-color:black;
+/*    -fx-widht:600;
+    -fx-height:100;*/
+    -fx-min-width:600;
+    -fx-min-height:100;
+}
