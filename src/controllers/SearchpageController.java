@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -26,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import model.Flight;
 
 /**
  * FXML Controller class
@@ -34,6 +36,9 @@ import javafx.util.Callback;
  */
 public class SearchpageController implements Initializable {
 
+    //Data variables
+    ArrayList<Flight> foundFlights;
+    ///
     Stage stage;  //Refers to the current window
     SearchController search; //This will do the searching. 
     @FXML
@@ -59,6 +64,7 @@ public class SearchpageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         addDateListeners();
+        foundFlights = new ArrayList();
 
         //Creates a binding which disables the search button if the fields are not filled out.
         searchButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
@@ -138,10 +144,9 @@ public class SearchpageController implements Initializable {
         LocalDate returnDate = secondDate.getValue();
         String departure = departingFrom.getText();
         String arrival = arrivingTo.getText();
-  
-        
-        
+
         Parent root;
+        //This opens the booking page
         try {
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/BookingPage.fxml"));
@@ -151,10 +156,16 @@ public class SearchpageController implements Initializable {
             stage.setScene(scene);
             stage.show();
             BookingPageController controller = (BookingPageController) loader.getController();
-            controller.passFlightData(departing, departure, returnDate, arrival,allSearchFields);
+            controller.setSearchController(this);
+            controller.passFlightData(departing, departure, returnDate, arrival, allSearchFields);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Flight> getFoundFlights() {
+        return foundFlights;
     }
 
 }
