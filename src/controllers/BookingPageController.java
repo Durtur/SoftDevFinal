@@ -28,19 +28,22 @@ import javafx.scene.layout.TilePane;
  * @author Símon Örn Reynisson <sor7@hi.is>
  */
 public class BookingPageController implements Initializable {
-
+    SearchpageController searchPage;
     BookingController book;
     @FXML
     private Pane headerPane;
     @FXML
     private BorderPane bookableFlights;
+    
+//    private OnClickListener bookingButtonListener;
 
     /**
-     * Initializes the controller class.
+     * Initializes the controller class. This function is automatically called when the 
+     * controller is created. 
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+//       createBookingListener();
     }
 
     /**
@@ -57,10 +60,13 @@ public class BookingPageController implements Initializable {
         Button button = new Button();
         Label label = new Label();
         ArrayList<Label> labels = new ArrayList();
+        
+        //Here we need to contact SearchPageController
+        searchPage.getFoundFlights();
         label.setText("From " + departure + " to " + arrival + "\n" + departing.toString());
         labels.add(label);
         if (returnDate != null) {
-        
+            //Here we add a return FLIGHT object
             Label label2 = new Label();
             label2.setText("From " + arrival + " to " + departure + "\n" + returnDate.toString());
             labels.add(label2);
@@ -77,5 +83,17 @@ public class BookingPageController implements Initializable {
         
         bookableFlights.setCenter(tp);
     }
+    
+    //Todo: Make a generic booking listener for buttons. 
+
+    private void createBookingListener() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    void setSearchController(SearchpageController aThis) {
+        searchPage=aThis;
+    }
+    
+    
 
 }
