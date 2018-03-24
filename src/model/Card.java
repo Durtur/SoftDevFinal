@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author Unnur Bjarnadóttir <uab1@hi.is>
+ * @author Símon Örn Reynisson <sor7@hi.is>
  */
 public class Card {
     private String fullName, expiryDate;
