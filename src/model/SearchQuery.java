@@ -26,7 +26,7 @@ public class SearchQuery {
     }
     
     public Date getFirstDate() {
-    	return ;
+    	return firstDate;
     }
     
     public void setFirstDate(Date firstDate) {
