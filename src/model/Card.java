@@ -14,6 +14,13 @@ public class Card {
     private long cardNumber;
     private int securityNumber;
     
+    public Card(String fullName, String expiryDate, long cardNumber, int securityNumber) {
+    	this.fullName = fullName;
+    	this.expiryDate = expiryDate;
+    	this.cardNumber = cardNumber;
+    	this.securityNumber = securityNumber;
+    }
+        
     public String getFullName() {
         return fullName;
     }
