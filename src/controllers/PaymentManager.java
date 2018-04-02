@@ -14,6 +14,7 @@ import model.Card;
  */
 public class PaymentManager {
     
+    // Checks if inputs into Card are valid (to a certain extent)
     public boolean processPayment(Card cardInfo) {
         boolean success = false;
         String cardNumberString;
