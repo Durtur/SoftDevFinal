@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -71,5 +72,10 @@ public class SearchQuery {
     
     public void setPassengerNo(int passengerNo) {
     	this.passengerNo = passengerNo;
+    }
+    
+    // not sure how to implement this
+    public void searchQuery(LocalDate firstDate, LocalDate secondDate, String departingFrom, String arrivingTo, int passengerNo) {
+        
     }
 }
