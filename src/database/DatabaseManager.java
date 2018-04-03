@@ -51,6 +51,7 @@ public class DatabaseManager {
             } catch (Exception e2) {
                 // Höldum áfram og reynum ODBC
                 //conn = DriverManager.getConnection("jdbc:odbc:" + dbName);
+                Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, e2);
             }
         return conn;
         }
