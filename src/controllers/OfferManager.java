@@ -5,10 +5,27 @@
  */
 package controllers;
 
+import database.DatabaseManager;
+import java.util.ArrayList;
+
 /**
  *
  * @author Símon Örn Reynisson <sor7@hi.is>
  */
 public class OfferManager {
+    private DatabaseManager db;
     
+    public OfferManager(DatabaseManager db) {
+        this.db = db;
+    }
+    
+    /**
+     * 
+     * @return An ArrayList with offers from DatabaseManager
+     */
+    public ArrayList<String> getOffers() {
+        //hasn't been implemented in DatabaseManager yet, therefore placement return
+        //return db.getOffers();
+        return new ArrayList<String>();
+    }
 }
