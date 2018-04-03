@@ -29,8 +29,9 @@ public class OffersMock {
     
     
     //simulates the situation where the db cannot be accessed
-    public ArrayList<String[]> noDBConnection(){
-        return null;
+    public ArrayList<String[]> noDBConnection() throws Exception {
+        throw new Exception();
+       
     }
 }
 
