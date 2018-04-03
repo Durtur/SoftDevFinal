@@ -35,13 +35,14 @@ public class DatabaseManager {
      * @throws Exception
      */
     private Connection connect() throws Exception {
-        Connection conn;
+        Connection conn = null;
+        /*
         try {
             // Reynum fyrst PostgreSQL
             Class.forName("org.postgresql.Driver");	// fyrir PostgreSQL
             java.util.Properties props = new java.util.Properties();
             conn = DriverManager.getConnection("jdbc:postgresql:" + dbName, props);
-        } catch (Exception e) {
+        } catch (Exception e) {*/
             // Höldum bara áfram og reynum SQLite
             try {
                 Class.forName("org.sqlite.JDBC");		// fyrir SQLite
@@ -49,12 +50,11 @@ public class DatabaseManager {
                 conn = DriverManager.getConnection("jdbc:sqlite:" + dbName);
             } catch (Exception e2) {
                 // Höldum áfram og reynum ODBC
-                conn = DriverManager.getConnection("jdbc:odbc:" + dbName);
+                //conn = DriverManager.getConnection("jdbc:odbc:" + dbName);
             }
-        }
         return conn;
-
-    }
+        }
+    //}
 
     /**
      * *
