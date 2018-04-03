@@ -72,4 +72,8 @@ public class SearchQuery {
     public void setPassengerNo(int passengerNo) {
     	this.passengerNo = passengerNo;
     }
+    @Override
+    public String toString(){
+        return "From " + departingFrom + " to " + arrivingTo + " on the " + firstDate + ", return on the " + secondDate + " --- Passengers: " + passengerNo;
+    }
 }
