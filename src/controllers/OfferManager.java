@@ -15,6 +15,9 @@ import java.util.ArrayList;
 public class OfferManager {
     private DatabaseManager db;
     
+    public OfferManager(){
+        db = new DatabaseManager();
+    }
     public OfferManager(DatabaseManager db) {
         this.db = db;
     }
@@ -23,9 +26,8 @@ public class OfferManager {
      * 
      * @return An ArrayList with offers from DatabaseManager
      */
-    public ArrayList<String> getOffers() {
-        //hasn't been implemented in DatabaseManager yet, therefore placement return
-        //return db.getOffers();
-        return new ArrayList<String>();
+    public ArrayList<String[]> getOffers() {
+      
+        return db.getOffers();
     }
 }

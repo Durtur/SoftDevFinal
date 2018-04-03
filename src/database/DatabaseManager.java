@@ -43,19 +43,37 @@ public class DatabaseManager {
             java.util.Properties props = new java.util.Properties();
             conn = DriverManager.getConnection("jdbc:postgresql:" + dbName, props);
         } catch (Exception e) {*/
-            // Höldum bara áfram og reynum SQLite
-            try {
-                Class.forName("org.sqlite.JDBC");		// fyrir SQLite
-                // conn = DriverManager.getConnection("jdbc:sqlite::resource:" + dbName );
-                conn = DriverManager.getConnection("jdbc:sqlite:" + dbName);
-            } catch (Exception e2) {
-                // Höldum áfram og reynum ODBC
-                //conn = DriverManager.getConnection("jdbc:odbc:" + dbName);
-                Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, e2);
-            }
-        return conn;
+        // Höldum bara áfram og reynum SQLite
+        try {
+            Class.forName("org.sqlite.JDBC");		// fyrir SQLite
+            // conn = DriverManager.getConnection("jdbc:sqlite::resource:" + dbName );
+            conn = DriverManager.getConnection("jdbc:sqlite:" + dbName);
+        } catch (Exception e) {
+            // Höldum áfram og reynum ODBC
+            //conn = DriverManager.getConnection("jdbc:odbc:" + dbName);
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, e);
         }
-    //}
+        return conn;
+    }
+
+ 
+    public ArrayList<String[]> getOffers() {
+        ArrayList<String[]> offers = new ArrayList();
+
+        try {
+            Connection conn = connect();
+            PreparedStatement p = conn.prepareStatement("Select * from Offers");
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                offers.add(new String[]{r.getString(1), r.getString(2)});
+
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return offers;
+    }
 
     /**
      * *
