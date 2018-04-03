@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Airline;
 import model.Flight;
+import model.SearchQuery;
 
 /**
  * Connects to an existing database (Not ready).
@@ -24,7 +25,8 @@ import model.Flight;
  */
 public class DatabaseManager {
 
-    private final String dbName = getClass().getResource("flightsearch.db").toString();
+//    private final String dbName = getClass().getResource("flightsearch.db").toString();
+    private final String dbName = "flightsearch.db";
 
     /**
      * Connects to a database that has the same name as dbName variable.
@@ -43,7 +45,8 @@ public class DatabaseManager {
             // Höldum bara áfram og reynum SQLite
             try {
                 Class.forName("org.sqlite.JDBC");		// fyrir SQLite
-                conn = DriverManager.getConnection("jdbc:sqlite::resource:" + dbName );
+                // conn = DriverManager.getConnection("jdbc:sqlite::resource:" + dbName );
+                conn = DriverManager.getConnection("jdbc:sqlite:" + dbName);
             } catch (Exception e2) {
                 // Höldum áfram og reynum ODBC
                 conn = DriverManager.getConnection("jdbc:odbc:" + dbName);
@@ -51,26 +54,6 @@ public class DatabaseManager {
         }
         return conn;
 
-        // Þegar hér er komið erum við með tengingu við gagnagrunn
-        // (conn) sem er annaðhvort PostgreSQL, SQLite eða ODBC.
-//		String ssn, lname;
-//		double salary;
-//		String stmt1 = "select Lname, Salary from EMPLOYEE where ssn = ?";
-//		PreparedStatement p = conn.prepareStatement(stmt1);
-//		System.out.print("Enter a Social Security Number: ");
-//		Scanner scanner = new Scanner(System.in);
-//		ssn = scanner.nextLine();
-//		p.clearParameters();
-//		p.setString(1,ssn);
-//		ResultSet r = p.executeQuery();
-//		while( r.next() )
-//		{
-//			lname = r.getString(1);
-//			salary = r.getDouble(2);
-//			System.out.println(lname+" "+salary);
-//		}
-//		r.close();
-//		conn.close();
     }
 
     /**
@@ -97,17 +80,16 @@ public class DatabaseManager {
         }
         return airlines;
     }
-    
-    
+
     public ArrayList<String> getAirports() {
         ArrayList<String> airports = new ArrayList();
 
         try {
             Connection conn = connect();
-            PreparedStatement p = conn.prepareStatement("Select * from Airlines");
+            PreparedStatement p = conn.prepareStatement("Select * from Airports");
             ResultSet r = p.executeQuery();
             while (r.next()) {
-              
+
                 airports.add(r.getString(1));
 
             }
@@ -118,17 +100,32 @@ public class DatabaseManager {
         return airports;
     }
 
-    public ArrayList<Flight> getFlights() {
+    public ArrayList<Flight> getFlights(String departingFrom, String arrivingTo, Date departureTime, int passengerNo) {
         ArrayList<Flight> flights = new ArrayList();
         Flight currentFlight;
-         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        Date departureTime,arrivalTime;
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
         try {
             Connection conn = connect();
-            PreparedStatement p = conn.prepareStatement("Select * from Flights");
+            PreparedStatement p;
+            String sql;
+            if (arrivingTo.equals("")) {
+                System.out.println("Spinning the Globe");
+                sql = "Select * from Flights WHERE departureAirport=? AND FreeSeats>?";
+                p = conn.prepareStatement(sql);
+                p.setString(1, departingFrom);
+                p.setInt(2, passengerNo);
+            } else {
+                sql = "Select * from Flights WHERE departureAirport=? AND arrivalAirport=? AND FreeSeats>?";
+                p = conn.prepareStatement(sql);
+                p.setString(1, departingFrom);
+                p.setString(2, arrivingTo);
+                p.setInt(3, passengerNo);
+            }
+
             ResultSet r = p.executeQuery();
             while (r.next()) {
-                currentFlight=new Flight();
+                currentFlight = new Flight();
                 currentFlight.setAirline(r.getString(1));
                 currentFlight.setFlightNumber(r.getString(2));
                 currentFlight.setDepartureTime(df.parse(r.getString(3)));
@@ -138,6 +135,7 @@ public class DatabaseManager {
                 currentFlight.setPrice(r.getInt(7));
                 currentFlight.setDuration(r.getInt(8));
                 flights.add(currentFlight);
+                System.out.println(currentFlight);
 
             }
         } catch (Exception ex) {
@@ -148,24 +146,12 @@ public class DatabaseManager {
     }
     private static int lastIndex = 0;
 
-    public static String rotateString(String s) {
-        if (lastIndex == 5) {
-            lastIndex = 0;
-        }
-
-        int charIndex = (int) s.charAt(lastIndex);
-        charIndex++;
-        if(charIndex>90)charIndex=65;
-        StringBuilder stringbuilder = new StringBuilder(s);
-        stringbuilder.setCharAt(lastIndex, (char) charIndex);
-        lastIndex++;
-
-        return stringbuilder.toString();
-
-    }
-    
-    private void generateRandomFlights(){
-         DatabaseManager db = new DatabaseManager();
+    /**
+     * This method is not in use. It can be used to populate the database with
+     * random flights.
+     */
+    private void generateRandomFlights() {
+        DatabaseManager db = new DatabaseManager();
         try {
             Connection conn = db.connect();
             ArrayList<Airline> airlines = db.getAirlines();
@@ -174,18 +160,19 @@ public class DatabaseManager {
             String sql = "INSERT INTO Flights(airline,flightNumber,departureTime,arrivalTime,departureAirport,arrivalAirport,price,duration) VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement p = conn.prepareStatement(sql);
             String currentDestination, currentDeparture, airlinePrefix;
-            String flightNo = "AKGLC";
+            int flightNo = 111;
             int[] prices = new int[]{12000, 24000, 36000, 13000, 130000, 200000, 56000, 51000, 48000, 66000, 92000, 450000};
 
             SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
             Date departureTime, arrivalTime;
             for (Airline a : airlines) {
-                for (int j = 0; j < 10; j++) {
+                flightNo = 111;
+                airlinePrefix = a.getName().substring(0, 2).toUpperCase();
+                for (int j = 0; j < 600; j++) {
+                    flightNo++;
 
                     currentDeparture = airports.get((int) (Math.random() * airports.size()));
                     currentDestination = airports.get((int) (Math.random() * airports.size()));
-                    flightNo = rotateString(flightNo);
-                    airlinePrefix = a.getName().substring(0, 2).toUpperCase();
 
                     departureTime = new Date();
                     arrivalTime = new Date();
@@ -227,10 +214,8 @@ public class DatabaseManager {
 
     public static void main(String[] args) {
         DatabaseManager db = new DatabaseManager();
-        ArrayList<Flight> airlines =db.getFlights();
-        for(Flight f:airlines){
-            System.out.println(f);
-        }
-       
+        // db.generateRandomFlights();
+
     }
+
 }

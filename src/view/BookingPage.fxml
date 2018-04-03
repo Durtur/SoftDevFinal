@@ -12,11 +12,15 @@
         <URL value="@/styles/styles.css" />
     </stylesheets>
    <children>
+      <StackPane layoutY="164.0" prefHeight="522.0" prefWidth="896.0">
+         <children>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="547.0" prefWidth="876.0">
+               <content>
+                  <FlowPane fx:id="bookableFlights" prefHeight="513.0" prefWidth="883.0" />
+               </content>
+            </ScrollPane>
+         </children>
+      </StackPane>
       <Pane fx:id="headerPane" prefHeight="168.0" prefWidth="896.0" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="134.0" prefHeight="547.0" prefWidth="876.0">
-         <content>
-            <BorderPane fx:id="bookableFlights" prefHeight="527.0" prefWidth="858.0" />
-         </content>
-      </ScrollPane>
    </children>
 </AnchorPane>

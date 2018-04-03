@@ -8,10 +8,18 @@ package controllers;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -28,6 +37,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Flight;
+import model.SearchQuery;
+import view.AutoCompleteTextField;
 
 /**
  * FXML Controller class
@@ -41,6 +52,7 @@ public class SearchpageController implements Initializable {
     ///
     Stage stage;  //Refers to the current window
     SearchController search; //This will do the searching. 
+    AutoCompleteTextField departureField, arrivalField;
     @FXML
     private DatePicker firstDate;
     @FXML
@@ -57,6 +69,8 @@ public class SearchpageController implements Initializable {
     private Button searchButton;
     @FXML
     private GridPane allSearchFields;
+    @FXML
+    private ComboBox<String> numPassengersCombo;
 
     /**
      * Initializes the controller class.
@@ -64,17 +78,35 @@ public class SearchpageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         addDateListeners();
-        foundFlights = new ArrayList();
+        search = new SearchController();
+       
 
         //Creates a binding which disables the search button if the fields are not filled out.
-        searchButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
-            return departingFrom.getText().length() == 0 || arrivingTo.getText().length() == 0
-                    || firstDate.getValue() == null || (!isOneWay.isSelected() && secondDate.getValue() == null);
-        }, arrivingTo.textProperty(), departingFrom.textProperty(), firstDate.valueProperty(), secondDate.valueProperty(), isOneWay.selectedProperty()));
+//        searchButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
+//            return departingFrom.getText().length() == 0 || arrivingTo.getText().length() == 0
+//                    || firstDate.getValue() == null || (!isOneWay.isSelected() && secondDate.getValue() == null);
+//        }, arrivingTo.textProperty(), departingFrom.textProperty(), firstDate.valueProperty(), secondDate.valueProperty(), isOneWay.selectedProperty()));
+         isOneWay.selectedProperty().bind(Bindings.createBooleanBinding(() -> {
+           return arrivingTo.getText().length() == 0;
+                    
+        }, arrivingTo.textProperty()));
+        
+
+        startAutoComplete();
+        populateComboBox();
+
     }
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    private void startAutoComplete() {
+        HashSet<String> autoCompletes = new HashSet<String>(search.getAirports());
+        departureField = (AutoCompleteTextField) departingFrom;
+        arrivalField = (AutoCompleteTextField) arrivingTo;
+        arrivalField.getEntries().addAll(autoCompletes);
+        departureField.getEntries().addAll(autoCompletes);
     }
 
     /**
@@ -129,6 +161,8 @@ public class SearchpageController implements Initializable {
 //        firstDate.valueProperty().addListener((ov, oldValue, newValue) -> {
 //            secondDate.setValue(newValue.plusDays(7));
 //        });
+        
+       
     }
 
     /**
@@ -140,11 +174,15 @@ public class SearchpageController implements Initializable {
     @FXML
     private void searchHandler(ActionEvent event) {
         //Just a test, this can be deleted later. 
-        LocalDate departing = firstDate.getValue();
-        LocalDate returnDate = secondDate.getValue();
-        String departure = departingFrom.getText();
-        String arrival = arrivingTo.getText();
-
+        //SearchQuery(Date firstDate, Date secondDate, String departingFrom, String arrivingTo, String airline, int passengerNo) 
+        Date firstDateD, secondDateD;
+   
+        firstDateD = parseDateFromLocalDate(firstDate.getValue());
+        secondDateD = parseDateFromLocalDate(secondDate.getValue());
+        
+        SearchQuery sq = new SearchQuery(firstDateD, secondDateD, departingFrom.getText(), arrivingTo.getText(), null, Integer.valueOf(numPassengersCombo.getSelectionModel().getSelectedItem()));
+        System.out.println(sq);
+        foundFlights=search.search(sq);
         Parent root;
         //This opens the booking page
         try {
@@ -157,7 +195,7 @@ public class SearchpageController implements Initializable {
             stage.show();
             BookingPageController controller = (BookingPageController) loader.getController();
             controller.setSearchController(this);
-            controller.passFlightData(departing, departure, returnDate, arrival, allSearchFields);
+            controller.passFlightData(allSearchFields,isOneWay.isSelected(),sq.getPassengerNo());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -166,6 +204,24 @@ public class SearchpageController implements Initializable {
 
     public ArrayList<Flight> getFoundFlights() {
         return foundFlights;
+    }
+
+    private void populateComboBox() {
+        ObservableList<String> arr = FXCollections.observableArrayList();
+        for (int i = 1; i < 6; i++) {
+            arr.add(String.valueOf(i));
+        }
+
+        numPassengersCombo.getItems().addAll(arr);
+        numPassengersCombo.getSelectionModel().selectFirst();
+    }
+
+    private Date parseDateFromLocalDate(LocalDate local) {
+        if(local==null)return null;
+        LocalDateTime localDateTime = local.atStartOfDay();
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
+        Instant instant = Instant.from(zonedDateTime);
+        return Date.from(instant);
     }
 
 }

@@ -61,3 +61,7 @@ Class for the panes that contain the listed flights on the booking page.
     -fx-min-width:600;
     -fx-min-height:100;
 }
+
+.price_label{
+    
+}
