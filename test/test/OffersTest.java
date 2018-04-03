@@ -37,12 +37,7 @@ public class OffersTest {
 
     @Test //when connection to db fails
     public void noConnectionMockTest() throws Exception {
-        try {
-            ArrayList<String[]> offers = om.noDBConnection();
-            //assertTrue(offers == null);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+          ArrayList<String[]> offers = om.noDBConnection();
         
 
     }
