@@ -6,7 +6,8 @@
 package utils;
 
 /**
- *
+ *  Parses a string of amounts so that they're easily readable, 
+ * e.g. 150000 becomes 150,000 etc. 
  * @author Símon Örn Reynisson <sor7@hi.is>
  */
 public class KronutoluParser {
