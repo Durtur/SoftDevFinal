@@ -5,7 +5,9 @@ import java.util.ArrayList;
 public class OffersMock {
 
     private ArrayList<String[]> offers;
-
+    public OffersMock(){
+        setUp();
+    }
     private void setUp() {
         offers = new ArrayList();
         String headerString = "a";
