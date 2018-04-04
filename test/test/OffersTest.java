@@ -35,10 +35,17 @@ public class OffersTest {
         assertEquals(0, offers.size());
     }
 
-    @Test //when connection to db fails
+    @Test(expected = Exception.class) //when connection to db fails
     public void noConnectionMockTest() throws Exception {
           ArrayList<String[]> offers = om.noDBConnection();
         
-
     }
+    /*
+    public static void main(String[] args) throws Exception{
+        OffersTest ot = new OffersTest();
+        ot.setUp();
+        ot.offersMockTest();
+        ot.noOffersMockTest();
+        ot.noConnectionMockTest();
+    }*/
 }
