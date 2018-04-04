@@ -40,12 +40,12 @@ public class OffersTest {
           ArrayList<String[]> offers = om.noDBConnection();
         
     }
-    /*
+
     public static void main(String[] args) throws Exception{
         OffersTest ot = new OffersTest();
         ot.setUp();
         ot.offersMockTest();
         ot.noOffersMockTest();
         ot.noConnectionMockTest();
-    }*/
+    }
 }
