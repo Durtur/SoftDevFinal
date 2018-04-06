@@ -77,4 +77,8 @@ public class SearchQuery {
     public String toString(){
         return "From " + departingFrom + " to " + arrivingTo + " on the " + firstDate + ", return on the " + secondDate + " --- Passengers: " + passengerNo;
     }
+    
+    public void SearchQuery(LocalDate firstDate, LocalDate secondDate, String departingFrom, String arrivingTo, int passengerNo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

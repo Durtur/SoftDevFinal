@@ -37,7 +37,7 @@ public class BookingController {
      * @param booking 
      */
     private void updateBookings(Booking booking) {
-        //eitthvað sniðugt
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     private boolean pay(Card cardInfo) {
