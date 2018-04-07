@@ -11,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentPageController">
     <stylesheets>
         <URL value="@/styles/styles.css" />
     </stylesheets>
@@ -123,6 +123,6 @@
          </children>
       </HBox>
       <Label id="flightInfo" fx:id="flightInfo" layoutX="77.0" layoutY="208.0" prefHeight="44.0" prefWidth="446.0" text="Flight info comes here" />
-      <Button fx:id="confirm" layoutX="263.0" layoutY="529.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Confirm" textOverrun="CLIP" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="270.0" />
+      <Button fx:id="confirm" layoutX="263.0" layoutY="529.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" text="Confirm" textOverrun="CLIP" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="270.0" />
    </children>
 </AnchorPane>
