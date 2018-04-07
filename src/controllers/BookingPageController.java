@@ -149,10 +149,13 @@ public class BookingPageController implements Initializable {
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.setOpacity(1);
+            //not ready, but set correct flight text in label on PaymentPage. Label is called flightInfo
+            //flightInfo.setText(myFlight.toString());
             stage.setTitle("Booking Details");
             stage.setScene(new Scene(root, 600, 600));
             stage.showAndWait();
+            Flight myFlight;
+            
             
         } catch (IOException e) {
             Logger.getLogger(BookingPageController.class.getName()).log(Level.SEVERE, null, e);
