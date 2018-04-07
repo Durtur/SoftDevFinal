@@ -25,6 +25,8 @@ public class PaymentPageController implements Initializable {
     
     ObservableList carryBags = FXCollections.observableArrayList();
     ObservableList checkBags = FXCollections.observableArrayList();
+    
+    BookingPageController booking;
 
     @FXML
     private TextField fullNameInput;
@@ -51,6 +53,7 @@ public class PaymentPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateBoxes();
+        
     }    
     
     @FXML
@@ -76,6 +79,11 @@ public class PaymentPageController implements Initializable {
         checkBags.addAll(a, b, c);
         checkedBagsInput.getItems().addAll(checkBags);
         carryOnBagsInput.getItems().addAll(carryBags);
+    }
+    
+    @FXML
+    public void setFlightInfo(String currentFlight) {
+        flightInfo.setText(currentFlight);
     }
     
 }

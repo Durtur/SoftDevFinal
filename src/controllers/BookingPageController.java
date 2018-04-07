@@ -48,6 +48,7 @@ public class BookingPageController implements Initializable {
     ArrayList<Button> bookingButtons;
     SearchpageController searchPage;
     BookingController book;
+    PaymentPageController payment;
     @FXML
     private Pane headerPane;
     @FXML
@@ -145,16 +146,22 @@ public class BookingPageController implements Initializable {
     private void goToPaymentPage(int flightToBookIndex) throws IOException {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         try {
+            
+            ArrayList<Flight> flights = searchPage.getFoundFlights();
+            String myFlight;
+            myFlight = flights.get(flightToBookIndex).toString();
+            
+            System.out.println("My flight is " + myFlight);
+            
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PaymentPage.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            //not ready, but set correct flight text in label on PaymentPage. Label is called flightInfo
-            Flight myFlight;
-            //flightInfo.setText(myFlight.toString());
+            //payment.setFlightInfo(myFlight);
             stage.setTitle("Booking Details");
             stage.setScene(new Scene(root, 600, 600));
-            stage.showAndWait();
+            
+            stage.show();
             
         } catch (IOException e) {
             Logger.getLogger(BookingPageController.class.getName()).log(Level.SEVERE, null, e);
