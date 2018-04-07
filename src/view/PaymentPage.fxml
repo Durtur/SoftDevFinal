@@ -51,6 +51,9 @@
                            <padding>
                               <Insets bottom="5.0" />
                            </padding>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
                         </Label>
                         <TextField fx:id="ssnInput" layoutX="80.0" layoutY="237.0" />
                      </children>
@@ -61,6 +64,9 @@
                            <padding>
                               <Insets bottom="5.0" />
                            </padding>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
                         </Label>
                         <ChoiceBox fx:id="checkedBagsInput" layoutX="80.0" prefHeight="27.0" prefWidth="167.0" />
                      </children>
@@ -71,6 +77,9 @@
                            <padding>
                               <Insets bottom="5.0" />
                            </padding>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
                         </Label>
                         <ChoiceBox fx:id="carryOnBagsInput" layoutX="80.0" prefHeight="27.0" prefWidth="167.0" />
                      </children>
