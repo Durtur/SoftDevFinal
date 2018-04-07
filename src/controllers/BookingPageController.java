@@ -144,17 +144,22 @@ public class BookingPageController implements Initializable {
      */
     private void goToPaymentPage(int flightToBookIndex) throws IOException {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PaymentPage.fxml"));
-        Parent root = fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        //stage.setOpacity(1);
-        stage.setTitle("Booking Details");
-        stage.setScene(new Scene(root, 600, 600));
-        stage.showAndWait();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PaymentPage.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            //stage.setOpacity(1);
+            stage.setTitle("Booking Details");
+            stage.setScene(new Scene(root, 600, 600));
+            stage.showAndWait();
+            
+        } catch (IOException e) {
+            Logger.getLogger(BookingPageController.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
-
+    
     void setSearchController(SearchpageController aThis) {
         searchPage = aThis;
     }
