@@ -10,6 +10,7 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import utils.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentPageController">
     <stylesheets>
@@ -42,7 +43,7 @@
                               <Insets bottom="5.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="fullNameInput" layoutX="80.0" layoutY="185.0" />
+                        <FullNameTextField fx:id="fullNameInput" layoutX="80.0" layoutY="185.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="80.0" layoutY="220.0">
@@ -55,7 +56,7 @@
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField fx:id="ssnInput" layoutX="80.0" layoutY="237.0" />
+                        <NumberTextField fx:id="ssnInput" layoutX="80.0" layoutY="237.0" />
                      </children>
                   </VBox>
                   <VBox>
@@ -95,7 +96,7 @@
                               <Insets bottom="5.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="cardNumberInput" layoutX="317.0" layoutY="185.0" />
+                        <NumberTextField fx:id="cardNumberInput" layoutX="317.0" layoutY="185.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="317.0" layoutY="221.0">
@@ -105,7 +106,7 @@
                               <Insets bottom="5.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="expiryDateInput" layoutX="317.0" layoutY="238.0" />
+                        <NumberTextField fx:id="expiryDateInput" layoutX="317.0" layoutY="238.0" />
                      </children>
                   </VBox>
                   <VBox layoutX="317.0" layoutY="274.0">
@@ -115,7 +116,7 @@
                               <Insets bottom="5.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="securityNumberInput" layoutX="317.0" layoutY="291.0" />
+                        <NumberTextField fx:id="securityNumberInput" layoutX="317.0" layoutY="291.0" />
                      </children>
                   </VBox>
                </children>
