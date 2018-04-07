@@ -45,6 +45,6 @@ public class BookingController {
     }
     
     public boolean book(ArrayList<Flight> flight, ArrayList<String> name, ArrayList<String> ssn) {
-        return true;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
