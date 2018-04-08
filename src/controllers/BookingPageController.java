@@ -7,15 +7,21 @@ package controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -26,6 +32,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Flight;
 import utils.KronutoluParser;
 
@@ -40,6 +48,7 @@ public class BookingPageController implements Initializable {
     ArrayList<Button> bookingButtons;
     SearchpageController searchPage;
     BookingController book;
+    PaymentPageController payment;
     @FXML
     private Pane headerPane;
     @FXML
@@ -119,7 +128,11 @@ public class BookingPageController implements Initializable {
                 public void handle(Event e) {
                     Button b = (Button) e.getSource();
                     int flightToBookIndex = bookingButtons.indexOf(b);
-                    goToPaymentPage(flightToBookIndex);
+                    try {
+                        goToPaymentPage(flightToBookIndex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(BookingPageController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
 
             });
@@ -135,11 +148,31 @@ public class BookingPageController implements Initializable {
      * the scene or by changing the stackpane. Get the flight chosen by using
      * the index parameter.
      */
-    private void goToPaymentPage(int flightToBookIndex) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void goToPaymentPage(int flightToBookIndex) throws IOException {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            
+            ArrayList<Flight> flights = searchPage.getFoundFlights();
+            String myFlight;
+            myFlight = flights.get(flightToBookIndex).toString();
+            System.out.println(flights);
+            System.out.println(myFlight);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PaymentPage.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            //payment.setFlightInfo(myFlight);
+            stage.setTitle("Booking Details");
+            stage.setScene(new Scene(root, 600, 600));
+            
+            stage.show();
+            
+        } catch (IOException e) {
+            Logger.getLogger(BookingPageController.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
-
+    
     void setSearchController(SearchpageController aThis) {
         searchPage = aThis;
     }
