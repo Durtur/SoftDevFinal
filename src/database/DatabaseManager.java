@@ -56,7 +56,6 @@ public class DatabaseManager {
         return conn;
     }
 
- 
     public ArrayList<String[]> getOffers() {
         ArrayList<String[]> offers = new ArrayList();
 
@@ -65,7 +64,7 @@ public class DatabaseManager {
             PreparedStatement p = conn.prepareStatement("Select * from Offers");
             ResultSet r = p.executeQuery();
             while (r.next()) {
-                offers.add(new String[]{r.getString(1), r.getString(2)});
+                offers.add(new String[]{r.getString(1), r.getString(2), r.getString(3)});
 
             }
 
@@ -154,7 +153,6 @@ public class DatabaseManager {
                 currentFlight.setPrice(r.getInt(7));
                 currentFlight.setDuration(r.getInt(8));
                 flights.add(currentFlight);
-            
 
             }
         } catch (Exception ex) {
@@ -234,6 +232,35 @@ public class DatabaseManager {
     public static void main(String[] args) {
         DatabaseManager db = new DatabaseManager();
         // db.generateRandomFlights();
+
+    }
+
+    public String findCheapest(String departing, String arriving) {
+        System.out.println(arriving);
+        Connection conn;
+        try {
+            conn = connect();
+            PreparedStatement p;
+            String sql;
+
+            sql = "Select min(price) from Flights WHERE departureAirport=? AND arrivalAirport=? AND FreeSeats>?";
+            p = conn.prepareStatement(sql);
+            p.setString(1, departing);
+            p.setString(2, arriving);
+            p.setInt(3, 0);
+
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                System.out.println(r.getString(1));
+                return r.getString(1);
+            }
+            
+            }catch (Exception ex) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "not available";
+
+      
 
     }
 

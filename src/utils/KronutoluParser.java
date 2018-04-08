@@ -26,6 +26,7 @@ public class KronutoluParser {
      public static String parse(String s) {
        
         String[] chopped = chopUp(s);
+        if(chopped==null)return s;
         s = chopped[0];
         for (int j = 1; j < chopped.length; j++) {
             s += "," + chopped[j];
@@ -48,6 +49,7 @@ public class KronutoluParser {
     }
 
     private static String[] chopUp(String s) {
+        if(s==null)return null;
         int klukka = 0;
         int staerd = s.length() / 3;
         if (s.length() % 3 != 0) {

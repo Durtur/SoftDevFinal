@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import java.awt.FlowLayout;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
@@ -20,9 +21,13 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -30,12 +35,20 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Flight;
+import model.Offer;
 import model.SearchQuery;
+import utils.KronutoluParser;
 import view.AutoCompleteTextField;
 
 /**
@@ -51,6 +64,7 @@ public class SearchpageController implements Initializable {
     Stage stage;  //Refers to the current window
     SearchController search; //This will do the searching. 
     AutoCompleteTextField departureField, arrivalField;
+    OfferManager offerManager;
     @FXML
     private DatePicker firstDate;
     @FXML
@@ -76,22 +90,22 @@ public class SearchpageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         addDateListeners();
+        offerManager = new OfferManager();
         search = new SearchController();
-       
 
         //Creates a binding which disables the search button if the fields are not filled out.
 //        searchButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
 //            return departingFrom.getText().length() == 0 || arrivingTo.getText().length() == 0
 //                    || firstDate.getValue() == null || (!isOneWay.isSelected() && secondDate.getValue() == null);
 //        }, arrivingTo.textProperty(), departingFrom.textProperty(), firstDate.valueProperty(), secondDate.valueProperty(), isOneWay.selectedProperty()));
-         isOneWay.selectedProperty().bind(Bindings.createBooleanBinding(() -> {
-           return secondDate.getValue() == null;
-                    
+        isOneWay.selectedProperty().bind(Bindings.createBooleanBinding(() -> {
+            return secondDate.getValue() == null;
+
         }, secondDate.valueProperty()));
-        
 
         startAutoComplete();
         populateComboBox();
+        updateAndShowOffers();
 
     }
 
@@ -159,8 +173,6 @@ public class SearchpageController implements Initializable {
 //        firstDate.valueProperty().addListener((ov, oldValue, newValue) -> {
 //            secondDate.setValue(newValue.plusDays(7));
 //        });
-        
-       
     }
 
     /**
@@ -171,18 +183,17 @@ public class SearchpageController implements Initializable {
      */
     @FXML
     private void searchHandler(ActionEvent event) {
-
+        
         Date firstDateD, secondDateD;
-   
+
         firstDateD = parseDateFromLocalDate(firstDate.getValue());
         secondDateD = parseDateFromLocalDate(secondDate.getValue());
-        
+
         SearchQuery sq = new SearchQuery(firstDateD, secondDateD, departingFrom.getText(), arrivingTo.getText(), null, Integer.valueOf(numPassengersCombo.getSelectionModel().getSelectedItem()));
         System.out.println(sq);
-        
-            foundFlights=search.search(sq);
-        
-        
+
+        foundFlights = search.search(sq);
+
         Parent root;
         //This opens the booking page
         try {
@@ -195,7 +206,7 @@ public class SearchpageController implements Initializable {
             stage.show();
             BookingPageController controller = (BookingPageController) loader.getController();
             controller.setSearchController(this);
-            controller.passFlightData(allSearchFields,isOneWay.isSelected(),sq.getPassengerNo());
+            controller.passFlightData(allSearchFields, isOneWay.isSelected(), sq.getPassengerNo());
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -217,11 +228,72 @@ public class SearchpageController implements Initializable {
     }
 
     private Date parseDateFromLocalDate(LocalDate local) {
-        if(local==null)return null;
+        if (local == null) {
+            return null;
+        }
         LocalDateTime localDateTime = local.atStartOfDay();
         ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
         Instant instant = Instant.from(zonedDateTime);
         return Date.from(instant);
+    }
+
+    public void updateAndShowOffers() {
+        ArrayList<Offer> offers = offerManager.getOffers();
+        ImageView currentView;
+        Label text, price;
+        Hyperlink header;
+        StackPane sp;
+        int rowIndex = 0;
+        for (Offer offer : offers) {
+
+            sp = new StackPane();
+            currentView = new ImageView(offer.getImage());
+            text = new Label(offer.getText());
+            price = new Label("From " + KronutoluParser.parse(offer.getPrice()) + " kr");
+            header = new Hyperlink(offer.getDestination());
+            
+            header.setOnAction(new EventHandler(){
+                @Override
+                public void handle(Event event) {
+                    Hyperlink thisOne = (Hyperlink) event.getSource();
+                    departingFrom.setText("Keflavík");
+                    arrivingTo.setText(thisOne.getText());
+                    firstDate.setValue(null);
+                    secondDate.setValue(null);
+                    searchButton.fire();
+                    
+                }
+               
+                
+            });
+            
+            
+           
+            
+            text.setWrapText(true);
+            header.setPrefWidth(100+(offer.getDestination().length()*42));
+            text.setPrefWidth(100+(offer.getDestination().length()*42));
+            StackPane.setAlignment(header,Pos.TOP_LEFT);
+            StackPane.setAlignment(text,Pos.TOP_LEFT);
+            StackPane.setAlignment(price,Pos.BOTTOM_RIGHT);
+            text.getStyleClass().add("offer_text");
+            header.getStyleClass().add("offer_header");
+            price.getStyleClass().add("offer_price");
+            sp.getChildren().addAll(currentView,text,header, price);
+
+            offersGrid.getChildren().add(sp);
+            GridPane.setRowIndex(sp, rowIndex);
+            rowIndex++;
+
+        }
+
+        offersGrid.setPrefHeight(offers.size() * offers.get(0).getImage().getHeight());
+        AnchorPane offerParent = (AnchorPane) offersGrid.getParent();
+        offerParent.setPrefHeight(offers.size() * offers.get(0).getImage().getHeight());
+    }
+
+    private void equalizeGridPane(GridPane offersGrid) {
+
     }
 
 }
