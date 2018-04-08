@@ -5,7 +5,6 @@
  */
 package controllers;
 
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
@@ -31,7 +30,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -87,9 +85,9 @@ public class SearchpageController implements Initializable {
 //                    || firstDate.getValue() == null || (!isOneWay.isSelected() && secondDate.getValue() == null);
 //        }, arrivingTo.textProperty(), departingFrom.textProperty(), firstDate.valueProperty(), secondDate.valueProperty(), isOneWay.selectedProperty()));
          isOneWay.selectedProperty().bind(Bindings.createBooleanBinding(() -> {
-           return arrivingTo.getText().length() == 0;
+           return secondDate.getValue() == null;
                     
-        }, arrivingTo.textProperty()));
+        }, secondDate.valueProperty()));
         
 
         startAutoComplete();
@@ -182,7 +180,10 @@ public class SearchpageController implements Initializable {
         
         SearchQuery sq = new SearchQuery(firstDateD, secondDateD, departingFrom.getText(), arrivingTo.getText(), null, Integer.valueOf(numPassengersCombo.getSelectionModel().getSelectedItem()));
         System.out.println(sq);
-        foundFlights=search.search(sq);
+        
+            foundFlights=search.search(sq);
+        
+        
         Parent root;
         //This opens the booking page
         try {

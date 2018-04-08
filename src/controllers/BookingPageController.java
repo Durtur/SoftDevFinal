@@ -77,9 +77,12 @@ public class BookingPageController implements Initializable {
             Button button = new Button();
             Label label = new Label();
             ArrayList<Label> labels = new ArrayList();
-            label.setText(flight.getFlightNumber() + " - " + flight.getAirline() + "\n" + "From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime());
+            label.setText(flight.getFlightNumber() + " - " + flight.getAirline() + 
+                    "\n" + "From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime() +
+                    "\n" + flight.getDuration() + " minutes");
             label.setPrefWidth(500);
             labels.add(label);
+            label.getStyleClass().add("flight_label");
             int price = flight.getPrice();
             if (!isOneWay) {
                 i++;
@@ -87,6 +90,7 @@ public class BookingPageController implements Initializable {
                 //Here we add a return FLIGHT object
                 Label label2 = new Label();
                 label2.setText("From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime());
+                label2.getStyleClass().add("flight_label");
                 labels.add(label2);
                 price+=flight.getPrice();
             }
@@ -100,7 +104,8 @@ public class BookingPageController implements Initializable {
             labels.add(priceLabel);
 
             HBox tp = new HBox();
-            tp.setPrefWidth(800);
+            tp.getStyleClass().add("bookable_flight_row");
+            tp.setPrefWidth(1300);
             tp.setSpacing(50);
             for (Label l : labels) {
                 tp.getChildren().add(l);

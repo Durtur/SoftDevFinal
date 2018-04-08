@@ -63,5 +63,19 @@ Class for the panes that contain the listed flights on the booking page.
 }
 
 .price_label{
-    
+     -fx-padding:10;
+}
+
+.bookable_flight_row{
+
+    -fx-padding:20;
+}
+
+.bookable_flight_row:hover{
+    -fx-background-color:#c2c2fb;
+    -fx-padding:20;
+}
+
+.flight_label{
+    -fx-padding:10;
 }

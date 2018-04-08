@@ -154,7 +154,7 @@ public class DatabaseManager {
                 currentFlight.setPrice(r.getInt(7));
                 currentFlight.setDuration(r.getInt(8));
                 flights.add(currentFlight);
-                System.out.println(currentFlight);
+            
 
             }
         } catch (Exception ex) {

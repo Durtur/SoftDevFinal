@@ -19,7 +19,7 @@ public class KronutoluParser {
         for (int j = 1; j < chopped.length; j++) {
             s += "," + chopped[j];
         }
-
+        
         return s;
     }
     

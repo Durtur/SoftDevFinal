@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author Símon Örn Reynisson <sor7@hi.is>
  */
-public class Flight {
+public class Flight implements Comparable{
     private String airline, flightNumber,departureAirport,arrivalAirport;
     private int price,duration;
     private Date departureTime,arrivalTime;
@@ -81,7 +81,14 @@ public class Flight {
     }
     
     public String toString(){
-        return airline + " : " + flightNumber + "  " + departureAirport +" -> " + arrivalAirport;
+        return airline + " : " + flightNumber + "  " + departureAirport +" -> " + arrivalAirport + "  ---- price " + price;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+       Flight otherFlight = (Flight)o;
+       return this.price - otherFlight.getPrice();
+       
     }
     
 }
