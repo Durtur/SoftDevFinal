@@ -153,8 +153,8 @@ public class BookingPageController implements Initializable {
         try {
 
             ArrayList<Flight> flights = searchPage.getFoundFlights();
-            String myFlight;
-            myFlight = flights.get(flightToBookIndex).toString();
+            Flight myFlight;
+            myFlight = flights.get(flightToBookIndex);
 
             System.out.println("the flight is " + myFlight);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PaymentPage.fxml"));

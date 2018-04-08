@@ -19,17 +19,20 @@ public class BookingController {
     private BookingController bookingController;
     private DatabaseManager db;
     private PaymentManager pm;
+    private PaymentPageController ppc;
     
     public BookingController() {
         bookingController = new BookingController();
         db = new DatabaseManager();
         pm = new PaymentManager();
+        ppc = new PaymentPageController();
     }
     
-    public BookingController(BookingController bookingController, DatabaseManager db, PaymentManager pm) {
+    public BookingController(BookingController bookingController, DatabaseManager db, PaymentManager pm, PaymentPageController ppc) {
         this.bookingController = bookingController;
         this.db = db;
         this.pm = pm;
+        this.ppc = ppc;
     }
     
     /**

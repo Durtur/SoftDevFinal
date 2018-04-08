@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.Flight;
 
 /**
  * FXML Controller class
@@ -29,6 +30,8 @@ public class PaymentPageController implements Initializable {
     ObservableList checkBags = FXCollections.observableArrayList();
     
     BookingPageController booking;
+    
+    public Flight currFlight;
 
     @FXML
     private TextField fullNameInput;
@@ -124,8 +127,9 @@ public class PaymentPageController implements Initializable {
     }
     
     @FXML
-    public void setFlightInfo(String currentFlight) {
-        flightInfo.setText(currentFlight);
+    public void setFlightInfo(Flight currentFlight) {
+        flightInfo.setText(currentFlight.toString());
+        currFlight = currentFlight;
     }
     
     private boolean validateCard(String card) {
