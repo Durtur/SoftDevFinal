@@ -86,9 +86,9 @@ public class BookingPageController implements Initializable {
             Button button = new Button();
             Label label = new Label();
             ArrayList<Label> labels = new ArrayList();
-            label.setText(flight.getFlightNumber() + " - " + flight.getAirline() + 
-                    "\n" + "From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime() +
-                    "\n" + flight.getDuration() + " minutes");
+            label.setText(flight.getFlightNumber() + " - " + flight.getAirline()
+                    + "\n" + "From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime()
+                    + "\n" + flight.getDuration() + " minutes");
             label.setPrefWidth(500);
             labels.add(label);
             label.getStyleClass().add("flight_label");
@@ -101,15 +101,15 @@ public class BookingPageController implements Initializable {
                 label2.setText("From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime());
                 label2.getStyleClass().add("flight_label");
                 labels.add(label2);
-                price+=flight.getPrice();
+                price += flight.getPrice();
             }
-            price*=noPassengers;
+            price *= noPassengers;
             String passengersString = " passenger";
-            if(noPassengers>1){
+            if (noPassengers > 1) {
                 passengersString = " passengers";
             }
             Label priceLabel = new Label();
-            priceLabel.setText(noPassengers + passengersString+ " \n" + KronutoluParser.parse(price) + " kr");
+            priceLabel.setText(noPassengers + passengersString + " \n" + KronutoluParser.parse(price) + " kr");
             labels.add(priceLabel);
 
             HBox tp = new HBox();
@@ -149,30 +149,30 @@ public class BookingPageController implements Initializable {
      * the index parameter.
      */
     private void goToPaymentPage(int flightToBookIndex) throws IOException {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
         try {
-            
+
             ArrayList<Flight> flights = searchPage.getFoundFlights();
             String myFlight;
             myFlight = flights.get(flightToBookIndex).toString();
-            System.out.println(flights);
-            System.out.println(myFlight);
+
+            System.out.println("the flight is " + myFlight);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PaymentPage.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            //payment.setFlightInfo(myFlight);
+            payment = (PaymentPageController) fxmlLoader.getController();
+            payment.setFlightInfo(myFlight);
             stage.setTitle("Booking Details");
             stage.setScene(new Scene(root, 600, 600));
-            
+
             stage.show();
-            
+
         } catch (IOException e) {
             Logger.getLogger(BookingPageController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
-    
     void setSearchController(SearchpageController aThis) {
         searchPage = aThis;
     }

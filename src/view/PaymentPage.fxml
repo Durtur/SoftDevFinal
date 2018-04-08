@@ -124,6 +124,6 @@
          </children>
       </HBox>
       <Label id="flightInfo" fx:id="flightInfo" layoutX="77.0" layoutY="208.0" prefHeight="44.0" prefWidth="446.0" text="Flight info should be here" />
-      <Button fx:id="confirm" layoutX="263.0" layoutY="529.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" text="Confirm" textOverrun="CLIP" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="270.0" />
+      <Button fx:id="confirm" layoutX="263.0" layoutY="529.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" styleClass="search_button" text="Confirm" textOverrun="CLIP" AnchorPane.leftAnchor="263.0" AnchorPane.rightAnchor="270.0" />
    </children>
 </AnchorPane>

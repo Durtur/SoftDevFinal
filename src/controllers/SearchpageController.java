@@ -171,8 +171,7 @@ public class SearchpageController implements Initializable {
      */
     @FXML
     private void searchHandler(ActionEvent event) {
-        //Just a test, this can be deleted later. 
-        //SearchQuery(Date firstDate, Date secondDate, String departingFrom, String arrivingTo, String airline, int passengerNo) 
+
         Date firstDateD, secondDateD;
    
         firstDateD = parseDateFromLocalDate(firstDate.getValue());
