@@ -62,9 +62,6 @@ public class PaymentPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateBoxes();
-        //flightInfo.setTextAlignment(TextAlignment.LEFT);
-        //System.out.println("fluginfo " + flightInfo.getText());
-        
     }    
     
     @FXML
