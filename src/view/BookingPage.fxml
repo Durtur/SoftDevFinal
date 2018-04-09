@@ -22,5 +22,6 @@
          </children>
       </StackPane>
       <Pane fx:id="headerPane" prefHeight="168.0" prefWidth="896.0" />
+      <Button fx:id="backButton" layoutX="1019.0" layoutY="33.0" mnemonicParsing="false" onAction="#goBack" prefHeight="63.0" prefWidth="66.0" styleClass="back_button" stylesheets="@../styles/styles.css" />
    </children>
 </AnchorPane>

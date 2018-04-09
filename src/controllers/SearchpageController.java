@@ -102,6 +102,7 @@ public class SearchpageController implements Initializable {
             return secondDate.getValue() == null;
 
         }, secondDate.valueProperty()));
+        
 
         startAutoComplete();
         populateComboBox();
@@ -111,6 +112,10 @@ public class SearchpageController implements Initializable {
 
     public void setStage(Stage stage) {
         this.stage = stage;
+    }
+    
+    public Stage getStage(){
+        return stage;
     }
 
     private void startAutoComplete() {
@@ -168,11 +173,10 @@ public class SearchpageController implements Initializable {
         secondDate.setDayCellFactory(dayCellFactoryLatterPicker);
         firstDate.setDayCellFactory(dayCellFactoryPriorPicker);
 
-        //This will set the next date fields to 5 days later than the first one
-        // automatically. I didn't like it. 
-//        firstDate.valueProperty().addListener((ov, oldValue, newValue) -> {
-//            secondDate.setValue(newValue.plusDays(7));
-//        });
+        //Sets the date for the second picker as 7 days later as the first one. 
+        firstDate.valueProperty().addListener((ov, oldValue, newValue) -> {
+            secondDate.setValue(newValue.plusDays(7));
+        });
     }
 
     /**
@@ -261,6 +265,7 @@ public class SearchpageController implements Initializable {
                     firstDate.setValue(null);
                     secondDate.setValue(null);
                     searchButton.fire();
+                    arrivalField.hidePopup();
                     
                 }
                
@@ -292,8 +297,6 @@ public class SearchpageController implements Initializable {
         offerParent.setPrefHeight(offers.size() * offers.get(0).getImage().getHeight());
     }
 
-    private void equalizeGridPane(GridPane offersGrid) {
-
-    }
+    
 
 }

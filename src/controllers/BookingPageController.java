@@ -5,33 +5,26 @@
  */
 package controllers;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.TilePane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Flight;
@@ -53,6 +46,8 @@ public class BookingPageController implements Initializable {
     private Pane headerPane;
     @FXML
     private FlowPane bookableFlights;
+    @FXML
+    private Button backButton;
 
 //    private OnClickListener bookingButtonListener;
     /**
@@ -89,7 +84,7 @@ public class BookingPageController implements Initializable {
             label.setText(flight.getFlightNumber() + " - " + flight.getAirline()
                     + "\n" + "From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime()
                     + "\n" + flight.getDuration() + " minutes");
-            label.setPrefWidth(500);
+            label.setPrefWidth(350);
             labels.add(label);
             label.getStyleClass().add("flight_label");
             int price = flight.getPrice();
@@ -98,7 +93,10 @@ public class BookingPageController implements Initializable {
                 flight = flights.get(i);
                 //Here we add a return FLIGHT object
                 Label label2 = new Label();
-                label2.setText("From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime());
+                label2.setPrefWidth(350);
+                label2.setText(flight.getFlightNumber() + " - " + flight.getAirline()
+                        + "\n" + "From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime()
+                        + "\n" + flight.getDuration() + " minutes");
                 label2.getStyleClass().add("flight_label");
                 labels.add(label2);
                 price += flight.getPrice();
@@ -175,6 +173,24 @@ public class BookingPageController implements Initializable {
 
     void setSearchController(SearchpageController aThis) {
         searchPage = aThis;
+    }
+
+    @FXML
+    private void goBack(ActionEvent event) {
+        Parent root;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Searchpage.fxml"));
+        try {
+            root = (Parent) loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = searchPage.getStage();
+            stage.setScene(scene);
+            stage.show();
+            SearchpageController controller = (SearchpageController) loader.getController();
+            controller.setStage(stage);
+        } catch (IOException ex) {
+            Logger.getLogger(BookingPageController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }

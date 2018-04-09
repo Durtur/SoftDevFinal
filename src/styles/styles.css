@@ -99,7 +99,8 @@ Class for the panes that contain the listed flights on the booking page.
     -fx-text-fill: black;
     -fx-background-color:rgba(250,250,250);
     -fx-font-size:60;
-
+    -fx-cursor: default;
+    -fx-animated: true;
 
 }
 
@@ -113,6 +114,19 @@ Class for the panes that contain the listed flights on the booking page.
     -fx-padding:20;
 }
 
+.back_button{
+    -fx-background-color:transparent;
+    -fx-background-image:url("/styles/img/arrow.png");
+    -fx-background-size:contain;
+}
+
+.back_button:hover{
+    -fx-background-color:transparent;
+    -fx-background-image:url("/styles/img/arrowb.png");
+    -fx-background-size:contain;
+}
+
 .flight_label{
     -fx-padding:10;
+    -fx-border-color:black;
 }
