@@ -11,12 +11,15 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.text.TextAlignment;
 import model.Flight;
 
 /**
@@ -52,12 +55,15 @@ public class PaymentPageController implements Initializable {
     @FXML
     private Button confirm;
 
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateBoxes();
+        //flightInfo.setTextAlignment(TextAlignment.LEFT);
+        //System.out.println("fluginfo " + flightInfo.getText());
         
     }    
     
@@ -129,6 +135,7 @@ public class PaymentPageController implements Initializable {
     @FXML
     public void setFlightInfo(Flight currentFlight) {
         flightInfo.setText(currentFlight.toString());
+        flightInfo.setAlignment(Pos.CENTER_LEFT);
         currFlight = currentFlight;
     }
     
