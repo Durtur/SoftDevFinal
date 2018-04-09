@@ -36,15 +36,15 @@
                   </AnchorPane>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="451.0" prefWidth="600.0" SplitPane.resizableWithParent="false">
                      <children>
-                        <Label layoutX="83.0" layoutY="20.0" text="Booking details:" textAlignment="RIGHT" />
-                        <Label id="flightInfo" fx:id="flightInfo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="83.0" layoutY="75.0" text="Flight info should be here" />
+                        <Label layoutX="83.0" layoutY="20.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
+                        <Label id="flightInfo" fx:id="flightInfo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="83.0" layoutY="75.0" styleClass="flight_info" text="Flight info should be here" />
                         <HBox layoutX="76.0" layoutY="131.0" prefHeight="198.0" prefWidth="432.0" spacing="100.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0">
                            <children>
                               <VBox>
                                  <children>
                                     <VBox layoutX="80.0" layoutY="168.0">
                                        <children>
-                                          <Label layoutX="80.0" layoutY="168.0" minWidth="-Infinity" text="Full Name:" textOverrun="CLIP">
+                                          <Label layoutX="80.0" layoutY="168.0" minWidth="-Infinity" styleClass="payment_info" text="Full Name:" textOverrun="CLIP">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>
@@ -54,7 +54,7 @@
                                     </VBox>
                                     <VBox layoutX="80.0" layoutY="220.0">
                                        <children>
-                                          <Label layoutX="80.0" layoutY="220.0" minWidth="-Infinity" text="Ssn:">
+                                          <Label layoutX="80.0" layoutY="220.0" minWidth="-Infinity" styleClass="payment_info" text="Ssn:">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>
@@ -67,7 +67,7 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <Label layoutX="80.0" layoutY="273.0" minWidth="-Infinity" text="Number of Checked Bags:">
+                                          <Label layoutX="80.0" layoutY="273.0" minWidth="-Infinity" styleClass="payment_info" text="Number of Checked Bags:">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>
@@ -80,7 +80,7 @@
                                     </VBox>
                                     <VBox>
                                        <children>
-                                          <Label layoutX="80.0" layoutY="326.0" minWidth="-Infinity" text="Number of Carry-On Bags:">
+                                          <Label layoutX="80.0" layoutY="326.0" minWidth="-Infinity" styleClass="payment_info" text="Number of Carry-On Bags:">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>
@@ -97,7 +97,7 @@
                                  <children>
                                     <VBox layoutX="317.0" layoutY="168.0">
                                        <children>
-                                          <Label layoutX="317.0" layoutY="168.0" minWidth="-Infinity" text="Card Number:">
+                                          <Label layoutX="317.0" layoutY="168.0" minWidth="-Infinity" styleClass="payment_info" text="Card Number:">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>
@@ -107,7 +107,7 @@
                                     </VBox>
                                     <VBox layoutX="317.0" layoutY="221.0">
                                        <children>
-                                          <Label layoutX="317.0" layoutY="221.0" minWidth="-Infinity" text="Expiry Date:">
+                                          <Label layoutX="317.0" layoutY="221.0" minWidth="-Infinity" styleClass="payment_info" text="Expiry Date:">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>
@@ -117,7 +117,7 @@
                                     </VBox>
                                     <VBox layoutX="317.0" layoutY="274.0">
                                        <children>
-                                          <Label layoutX="317.0" layoutY="274.0" minWidth="-Infinity" text="Security Number:">
+                                          <Label layoutX="317.0" layoutY="274.0" minWidth="-Infinity" styleClass="payment_info" text="Security Number:">
                                              <padding>
                                                 <Insets bottom="5.0" />
                                              </padding>

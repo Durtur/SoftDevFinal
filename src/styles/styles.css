@@ -116,3 +116,15 @@ Class for the panes that contain the listed flights on the booking page.
 .flight_label{
     -fx-padding:10;
 }
+
+.booking_details {
+    -fx-font-size:20;
+}
+
+.flight_info {
+    -fx-font-size:15;
+}
+
+.payment_info {
+    -fx-font-size:13;
+}

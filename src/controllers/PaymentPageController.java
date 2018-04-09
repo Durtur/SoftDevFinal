@@ -81,6 +81,7 @@ public class PaymentPageController implements Initializable {
             alert.setTitle("Invalid card number");
             alert.setContentText("Please enter valid card number");
             alert.show();
+            return;
         }
         
         if (validateSecurity(security) != true) {
@@ -89,6 +90,7 @@ public class PaymentPageController implements Initializable {
             alert.setTitle("Invalid security number");
             alert.setContentText("Please enter valid security number");
             alert.show();
+            return;
         }
         
         if (validateCheckBags(cb1) != true) {
@@ -97,6 +99,7 @@ public class PaymentPageController implements Initializable {
             //alert.setTitle("Please select check-in bags");
             alert.setContentText("Please select check-in bags");
             alert.show();
+            return;
         }
         
         if (validateCarryBags(cb2) != true) {
@@ -105,6 +108,7 @@ public class PaymentPageController implements Initializable {
             //alert.setTitle("Please select carry-on bags");
             alert.setContentText("Please select carry-on bags");
             alert.show();
+            return;
         }
         
         if (validateSsn(ssn) != true) {
@@ -113,6 +117,25 @@ public class PaymentPageController implements Initializable {
             alert.setTitle("Invalid ssn");
             alert.setContentText("Please enter valid ssn");
             alert.show();
+            return;
+        }
+        
+        if (validateName(name) != true) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setHeaderText(null);
+            //alert.setTitle("Invalid ssn");
+            alert.setContentText("Please enter a name");
+            alert.show();
+            return;
+        }
+        
+        if (validateExpiry(expiry) != true) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setHeaderText(null);
+            alert.setTitle("Invalid expiry date");
+            alert.setContentText("Please enter a valid expiry date");
+            alert.show();
+            return;
         }
         
         
@@ -121,11 +144,13 @@ public class PaymentPageController implements Initializable {
     private void populateBoxes() {
         carryBags.removeAll(carryBags);
         checkBags.removeAll(checkBags);
+        String z = "0";
         String a = "1";
         String b = "2";
         String c = "3";
-        carryBags.addAll(a, b, c);
-        checkBags.addAll(a, b, c);
+        String d = "4";
+        carryBags.addAll(z, a, b, c, d);
+        checkBags.addAll(z, a, b, c, d);
         checkedBagsInput.getItems().addAll(checkBags);
         carryOnBagsInput.getItems().addAll(carryBags);
     }
@@ -164,6 +189,18 @@ public class PaymentPageController implements Initializable {
     private boolean validateSsn(String ssn) {
         boolean correct;
         correct = ssnInput.getText().length() == 10;
+        return correct;
+    }
+    
+    private boolean validateName(String name) {
+        boolean correct;
+        correct = !"".equals(fullNameInput.getText());
+        return correct;
+    }
+    
+    private boolean validateExpiry(String expiry) {
+        boolean correct;
+        correct = expiryDateInput.getText().length() == 4;
         return correct;
     }
     

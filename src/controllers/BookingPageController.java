@@ -163,7 +163,7 @@ public class BookingPageController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             payment = (PaymentPageController) fxmlLoader.getController();
             payment.setFlightInfo(myFlight);
-            stage.setTitle("Booking Details");
+            stage.setTitle("Booking details");
             stage.setScene(new Scene(root, 800, 800));
             
             stage.show();
