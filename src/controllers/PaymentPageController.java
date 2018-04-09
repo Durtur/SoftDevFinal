@@ -62,6 +62,7 @@ public class PaymentPageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateBoxes();
+        
     }    
     
     @FXML
@@ -132,7 +133,7 @@ public class PaymentPageController implements Initializable {
     @FXML
     public void setFlightInfo(Flight currentFlight) {
         flightInfo.setText(currentFlight.toString());
-        flightInfo.setAlignment(Pos.CENTER_LEFT);
+        //flightInfo.setAlignment(Pos.CENTER_LEFT);
         currFlight = currentFlight;
     }
     

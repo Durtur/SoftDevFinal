@@ -164,8 +164,8 @@ public class BookingPageController implements Initializable {
             payment = (PaymentPageController) fxmlLoader.getController();
             payment.setFlightInfo(myFlight);
             stage.setTitle("Booking Details");
-            stage.setScene(new Scene(root, 600, 600));
-
+            stage.setScene(new Scene(root, 800, 800));
+            
             stage.show();
 
         } catch (IOException e) {
