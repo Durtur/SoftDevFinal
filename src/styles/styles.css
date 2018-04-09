@@ -116,7 +116,7 @@ Class for the panes that contain the listed flights on the booking page.
 
 .back_button{
     -fx-background-color:transparent;
-    -fx-background-image:url("/styles/img/arrow.png");
+    -fx-background-image:url("/styles/img/arrowo.png");
     -fx-background-size:contain;
 }
 
