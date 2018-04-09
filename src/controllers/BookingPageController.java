@@ -151,8 +151,8 @@ public class BookingPageController implements Initializable {
         try {
 
             ArrayList<Flight> flights = searchPage.getFoundFlights();
-            String myFlight;
-            myFlight = flights.get(flightToBookIndex).toString();
+            Flight myFlight;
+            myFlight = flights.get(flightToBookIndex);
 
             System.out.println("the flight is " + myFlight);
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PaymentPage.fxml"));
@@ -161,9 +161,9 @@ public class BookingPageController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             payment = (PaymentPageController) fxmlLoader.getController();
             payment.setFlightInfo(myFlight);
-            stage.setTitle("Booking Details");
-            stage.setScene(new Scene(root, 600, 600));
-
+            stage.setTitle("Booking details");
+            stage.setScene(new Scene(root, 800, 800));
+            
             stage.show();
 
         } catch (IOException e) {
