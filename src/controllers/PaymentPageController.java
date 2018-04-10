@@ -86,7 +86,7 @@ public class PaymentPageController implements Initializable {
     
     /**
      * checks if inputs are valid and sends confirmation email if so 
-     * (doesn't work right now)
+     * 
      */
     @FXML
     private void confirmBooking() {
