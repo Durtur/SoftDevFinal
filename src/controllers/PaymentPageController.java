@@ -73,14 +73,15 @@ public class PaymentPageController implements Initializable {
     @FXML
     private Button confirm;
 
-    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         populateBoxes();
-        
+        cardNumberInput.setPromptText("Enter 16 digits no spaces");
+        expiryDateInput.setPromptText("Enter 4 digits no spaces");
+        ssnInput.setPromptText("Enter 10 digits no spaces");
     }    
     
     /**
