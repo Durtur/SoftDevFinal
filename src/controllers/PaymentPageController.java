@@ -239,14 +239,14 @@ public class PaymentPageController implements Initializable {
      * @param subject
      * @param body 
      */
-    private void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+    private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.user", from);
         props.put("mail.smtp.password", pass);
-        props.put("mail.smtp.port", "586");
+        props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         
         Session session = Session.getDefaultInstance(props);
