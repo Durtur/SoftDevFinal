@@ -75,20 +75,20 @@ public class PaymentPageController implements Initializable {
         String expiry = expiryDateInput.getText();
         String security = securityNumberInput.getText();
         
-        if (validateCard(card) != true) {
+        if (validateName(name) != true) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setHeaderText(null);
-            alert.setTitle("Invalid card number");
-            alert.setContentText("Please enter valid card number");
+            //alert.setTitle("Invalid ssn");
+            alert.setContentText("Please enter a name");
             alert.show();
             return;
         }
         
-        if (validateSecurity(security) != true) {
+        if (validateSsn(ssn) != true) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setHeaderText(null);
-            alert.setTitle("Invalid security number");
-            alert.setContentText("Please enter valid security number");
+            alert.setTitle("Invalid ssn");
+            alert.setContentText("Please enter valid ssn");
             alert.show();
             return;
         }
@@ -111,20 +111,11 @@ public class PaymentPageController implements Initializable {
             return;
         }
         
-        if (validateSsn(ssn) != true) {
+        if (validateCard(card) != true) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setHeaderText(null);
-            alert.setTitle("Invalid ssn");
-            alert.setContentText("Please enter valid ssn");
-            alert.show();
-            return;
-        }
-        
-        if (validateName(name) != true) {
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setHeaderText(null);
-            //alert.setTitle("Invalid ssn");
-            alert.setContentText("Please enter a name");
+            alert.setTitle("Invalid card number");
+            alert.setContentText("Please enter valid card number");
             alert.show();
             return;
         }
@@ -138,7 +129,14 @@ public class PaymentPageController implements Initializable {
             return;
         }
         
-        
+        if (validateSecurity(security) != true) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setHeaderText(null);
+            alert.setTitle("Invalid security number");
+            alert.setContentText("Please enter valid security number");
+            alert.show();
+            return;
+        }        
     }
     
     private void populateBoxes() {
