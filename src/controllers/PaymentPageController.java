@@ -6,6 +6,7 @@
 package controllers;
 
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +21,13 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.TextAlignment;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import model.Flight;
 
 /**
@@ -35,6 +43,16 @@ public class PaymentPageController implements Initializable {
     BookingPageController booking;
     
     public Flight currFlight;
+    
+    private static String username = "softdevtest2018";
+    private static String password = "throunhugbunadar";
+    private static String recipient = "softdevtest2018@gmail.com";
+    
+    private String from = username;
+    private String pass = password;
+    private String[] to = {recipient};
+    private String subject = "Your booking information";
+    private String body = "Booking confirmed!";
 
     @FXML
     private TextField fullNameInput;
@@ -65,6 +83,10 @@ public class PaymentPageController implements Initializable {
         
     }    
     
+    /**
+     * checks if inputs are valid and sends confirmation email if so 
+     * (doesn't work right now)
+     */
     @FXML
     private void confirmBooking() {
         String name = fullNameInput.getText();
@@ -137,8 +159,15 @@ public class PaymentPageController implements Initializable {
             alert.show();
             return;
         } 
+        
+        else {
+            sendFromGMail(from, pass, to, subject, body);
+        }
     }
     
+    /**
+     * adds numbers into choice boxes for bags
+     */
     private void populateBoxes() {
         carryBags.removeAll(carryBags);
         checkBags.removeAll(checkBags);
@@ -156,7 +185,6 @@ public class PaymentPageController implements Initializable {
     @FXML
     public void setFlightInfo(Flight currentFlight) {
         flightInfo.setText(currentFlight.toString());
-        //flightInfo.setAlignment(Pos.CENTER_LEFT);
         currFlight = currentFlight;
     }
     
@@ -200,6 +228,54 @@ public class PaymentPageController implements Initializable {
         boolean correct;
         correct = expiryDateInput.getText().length() == 4;
         return correct;
+    }
+
+    /**
+     * sends an email to the person who booked
+     * @param from
+     * @param pass
+     * @param to
+     * @param subject
+     * @param body 
+     */
+    private void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+        Properties props = System.getProperties();
+        String host = "smtp.gmail.com";
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.user", from);
+        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.port", "586");
+        props.put("mail.smtp.auth", "true");
+        
+        Session session = Session.getDefaultInstance(props);
+        MimeMessage message = new MimeMessage(session);
+        
+        try {
+            message.setFrom(new InternetAddress(from));
+            InternetAddress[] toAddress;
+            toAddress = new InternetAddress[to.length];
+            
+            for( int i = 0; i < to.length; i++ ) {
+                toAddress[i] = new InternetAddress(to[i]);
+            }
+            
+            for( int i = 0; i < toAddress.length; i++) {
+                message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+            }
+        
+            message.setSubject(subject);
+            message.setText(body);
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+        
+        } catch (AddressException ae) {
+            ae.printStackTrace();
+        } catch (MessagingException me) {
+            me.printStackTrace();
+        }
     }
     
 }
