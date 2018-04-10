@@ -136,7 +136,7 @@ public class PaymentPageController implements Initializable {
             alert.setContentText("Please enter valid security number");
             alert.show();
             return;
-        }        
+        } 
     }
     
     private void populateBoxes() {
