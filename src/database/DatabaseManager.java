@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Airline;
+import model.Booking;
 import model.Flight;
 import model.SearchQuery;
 
@@ -27,6 +28,7 @@ public class DatabaseManager {
 
 //    private final String dbName = getClass().getResource("flightsearch.db").toString();
     private final String dbName = "flightsearch.db";
+    private static int lastIndex = 0;
 
     /**
      * Connects to a database that has the same name as dbName variable.
@@ -161,7 +163,86 @@ public class DatabaseManager {
         return flights;
 
     }
-    private static int lastIndex = 0;
+
+    private String getNextAvailableBookingNo(String flightNumber, Connection conn) {
+        String nextBookingNumber = null;
+        int lastCapitalLetterAscii = 90;
+        try {
+            
+            String sql = "Select min(bookingNo) from Bookings where flightNumber=?";
+            PreparedStatement p = conn.prepareStatement(sql);
+            p.setString(1, flightNumber);
+            ResultSet r = p.executeQuery();
+            while (r.next()) {
+                String bookingNo = r.getString(1);
+                if (bookingNo == null) {
+                    nextBookingNumber = "AFEJL";
+                    break;
+                }
+                int i = bookingNo.length() - 1;
+                while (((int) bookingNo.charAt(i) == lastCapitalLetterAscii)) {
+                    if (i == 0) {
+                        break;
+                    }
+                    i--;
+                }
+                int charIndex = (int) bookingNo.charAt(i);
+                charIndex++;
+                StringBuilder morph = new StringBuilder(bookingNo);
+                morph.setCharAt(i, (char) charIndex);
+                nextBookingNumber = morph.toString();
+
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return nextBookingNumber;
+    }
+
+    private void reserveFlightSeats(String flightNo, int numPassengers, Connection conn) {
+        try {
+            String sql = "update Flights set freeSeats=freeSeats-? where flightNumber=?";
+            PreparedStatement p = conn.prepareStatement(sql);
+            p.setInt(1, numPassengers);
+            p.setString(2, flightNo);
+
+            p.executeUpdate();
+
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void addBooking(Booking booking) {
+        try {
+            Connection conn = connect();
+            ArrayList<Flight> flightsToBook = booking.getFlights();
+            for (Flight f : flightsToBook) {
+                String sql = "INSERT INTO Bookings(flightNumber,bookingNo,noPassengers,fullName,ssn,carryOnBags,checkInBags) VALUES(?,?,?,?,?,?,?)";
+                PreparedStatement p = conn.prepareStatement(sql);
+                String bookingNo = getNextAvailableBookingNo(f.getFlightNumber(), conn);
+                int i;
+                for (i = 0; i < booking.getSsn().length; i++) {
+                    System.out.println(i);
+                    p.setString(1, f.getFlightNumber());
+                    p.setString(2, bookingNo);
+                    p.setInt(3, booking.getNoPassengers());
+                    p.setString(4, booking.getFullName()[i]);
+                    p.setString(5, booking.getSsn()[i]);
+                    p.setInt(6, booking.getCarryOnBags());
+                    p.setInt(7, booking.getCheckInBags());
+                    p.executeUpdate();
+                }
+                reserveFlightSeats(f.getFlightNumber(), i , conn);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     /**
      * This method is not in use. It can be used to populate the database with
@@ -215,6 +296,7 @@ public class DatabaseManager {
                     p.setInt(8, flightDuration);
 
                     p.executeUpdate();
+
                 }
 
             }
@@ -225,14 +307,9 @@ public class DatabaseManager {
 //            
 
         } catch (Exception ex) {
-            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DatabaseManager.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public static void main(String[] args) {
-        DatabaseManager db = new DatabaseManager();
-        // db.generateRandomFlights();
-
     }
 
     public String findCheapest(String departing, String arriving) {
@@ -253,15 +330,32 @@ public class DatabaseManager {
             while (r.next()) {
                 System.out.println(r.getString(1));
                 return r.getString(1);
+
             }
-            
-            }catch (Exception ex) {
-            Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseManager.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return "not available";
 
-      
+    }
 
+    public static void main(String[] args) {
+        DatabaseManager db = new DatabaseManager();
+
+        ArrayList<Flight> testFlights = new ArrayList();
+        Flight testFlight1 = new Flight();
+        testFlight1.setFlightNumber("WO700");
+        Flight testFlight2 = new Flight();
+        testFlight2.setFlightNumber("WO701");
+        testFlights.add(testFlight1);
+        testFlights.add(testFlight2);
+   
+        Booking testBook = new Booking(testFlights, "", 2, 2, 2, new String[]{"Joe", "Mary"}, new String[]{"000124125", "00515"});
+        db.addBooking(testBook);
+
+        //db.generateRandomFlights();
     }
 
 }
