@@ -52,9 +52,9 @@ public class PaymentPageController implements Initializable {
     private String from = username;
     private String pass = password;
     private String[] to = {recipient};
-    private String subject = "Your booking information";
-    private String body = "Booking confirmed!";
-
+    private String subject;
+    private String body; 
+    
     @FXML
     private TextField fullNameInput;
     @FXML
@@ -196,6 +196,14 @@ public class PaymentPageController implements Initializable {
     public void setFlightInfo(Flight currentFlight) {
         flightInfo.setText(currentFlight.toString());
         currFlight = currentFlight;
+        
+        subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
+        
+        body = "Thanks for using FlightCo! Here's some information about your flight: \n"+ currFlight.getFlightNumber() + " - " + currFlight.getAirline()
+                    + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + currFlight.getDepartureTime()
+                    + "\n" + currFlight.getDuration() + " minutes \n"
+                + "________________ \n"
+                + "You have booked: " + carryOnBagsInput.getValue() + " carry on bags, and: " + checkedBagsInput.getValue() + " checked bags.";
     }
     
     private boolean validateCard(String card) {
@@ -273,7 +281,7 @@ public class PaymentPageController implements Initializable {
             for( int i = 0; i < toAddress.length; i++) {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
-        
+                   
             message.setSubject(subject);
             message.setText(body);
             Transport transport = session.getTransport("smtp");
