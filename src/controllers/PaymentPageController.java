@@ -8,6 +8,7 @@ package controllers;
 import java.net.URL;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -82,6 +83,14 @@ public class PaymentPageController implements Initializable {
         cardNumberInput.setPromptText("Enter 16 digits no spaces");
         expiryDateInput.setPromptText("Enter 4 digits no spaces");
         ssnInput.setPromptText("Enter 10 digits no spaces");
+        
+        //disables confirm button until all TextField are entered 
+        BooleanBinding booleanBind = fullNameInput.textProperty().isEmpty()
+                            .or(ssnInput.textProperty().isEmpty())
+                                      .or(cardNumberInput.textProperty().isEmpty())
+                                        .or(expiryDateInput.textProperty().isEmpty())
+                                            .or(securityNumberInput.textProperty().isEmpty());
+        confirm.disableProperty().bind(booleanBind);
     }    
     
     /**
