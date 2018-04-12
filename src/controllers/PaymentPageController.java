@@ -38,8 +38,8 @@ import model.Flight;
  */
 public class PaymentPageController implements Initializable {
     
-    ObservableList carryBags = FXCollections.observableArrayList();
-    ObservableList checkBags = FXCollections.observableArrayList();
+    ObservableList carryBagsP1 = FXCollections.observableArrayList();
+    ObservableList checkBagsP1 = FXCollections.observableArrayList();
     
     BookingPageController booking;
     
@@ -179,23 +179,26 @@ public class PaymentPageController implements Initializable {
      * adds numbers into choice boxes for bags
      */
     private void populateBoxes() {
-        carryBags.removeAll(carryBags);
-        checkBags.removeAll(checkBags);
+        carryBagsP1.removeAll(carryBagsP1);
+        checkBagsP1.removeAll(checkBagsP1);
         String z = "0";
         String a = "1";
         String b = "2";
         String c = "3";
         String d = "4";
-        carryBags.addAll(z, a, b, c, d);
-        checkBags.addAll(z, a, b, c, d);
-        checkedBagsInput.getItems().addAll(checkBags);
-        carryOnBagsInput.getItems().addAll(carryBags);
+        carryBagsP1.addAll(z, a, b, c, d);
+        checkBagsP1.addAll(z, a, b, c, d);
+        checkedBagsInput.getItems().addAll(checkBagsP1);
+        carryOnBagsInput.getItems().addAll(carryBagsP1);
     }
     
     @FXML
     public void setFlightInfo(Flight currentFlight) {
-        flightInfo.setText(currentFlight.toString());
+        
         currFlight = currentFlight;
+        flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
+            + " to " + currFlight.getArrivalAirport() + " on " + currFlight.getDepartureTime() + "\nPrice "
+            + currFlight.getPrice() + " kr");
         
         subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
         
