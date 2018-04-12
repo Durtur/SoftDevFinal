@@ -181,13 +181,24 @@ public class PaymentPageController implements Initializable {
     private void populateBoxes() {
         carryBagsP1.removeAll(carryBagsP1);
         checkBagsP1.removeAll(checkBagsP1);
+        int carryBagPrice = 0;
+        int checkBagPrice = 0;
+        for (int i = 0; i < 5; i++) {
+            String a = "" + i + " - " + carryBagPrice + " kr";
+            String b = "" + i + " - " + checkBagPrice + " kr";
+            carryBagsP1.add(a);
+            checkBagsP1.add(b);
+            carryBagPrice += 1000;
+            checkBagPrice += 1500;
+        }
+        /*
         String z = "0";
         String a = "1";
         String b = "2";
         String c = "3";
         String d = "4";
         carryBagsP1.addAll(z, a, b, c, d);
-        checkBagsP1.addAll(z, a, b, c, d);
+        checkBagsP1.addAll(z, a, b, c, d);*/
         checkedBagsInput.getItems().addAll(checkBagsP1);
         carryOnBagsInput.getItems().addAll(carryBagsP1);
     }
