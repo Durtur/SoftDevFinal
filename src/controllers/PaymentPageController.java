@@ -58,6 +58,8 @@ public class PaymentPageController implements Initializable {
     private String subject;
     private String body; 
     
+    SimpleDateFormat ft = new SimpleDateFormat ("E dd MMM yyyy 'at' HH:mm");
+    
     @FXML
     private TextField fullNameInput;
     @FXML
@@ -101,8 +103,7 @@ public class PaymentPageController implements Initializable {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });*/
-        carryBagsP1.addListener((ListChangeListener)(c -> {
-            System.out.println("Bags changed");/* ... */}));
+        
     }    
     
     /**
@@ -183,6 +184,16 @@ public class PaymentPageController implements Initializable {
         } 
         
         else {
+            carryBagsP1.addListener((ListChangeListener)(c -> {
+                System.out.println("Bags changed");/* ... */}));
+            
+            subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
+        
+            body = "Thanks for using FlightCo! Here's some information about your flight: \n"+ currFlight.getFlightNumber() + " - " + currFlight.getAirline()
+                    + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + ft.format(currFlight.getDepartureTime())
+                    + "\n" + currFlight.getDuration() + " minutes \n"
+                + "________________ \n"
+                + "You have booked: " + carryOnBagsInput.getValue().substring(0,1) + " carry on bags, and: " + checkedBagsInput.getValue().substring(0,1) + " checked bags.";
             sendFromGMail(from, pass, to, subject, body);
         }
     }
@@ -219,20 +230,19 @@ public class PaymentPageController implements Initializable {
     
     @FXML
     public void setFlightInfo(Flight currentFlight) {
-        SimpleDateFormat ft = 
-        new SimpleDateFormat ("E dd MMM yyyy 'at' HH:mm");
+        
         currFlight = currentFlight;
         flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
             + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
             + currFlight.getPrice() + " kr");
         
-        subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
+        /*subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
         
         body = "Thanks for using FlightCo! Here's some information about your flight: \n"+ currFlight.getFlightNumber() + " - " + currFlight.getAirline()
                     + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + ft.format(currFlight.getDepartureTime())
                     + "\n" + currFlight.getDuration() + " minutes \n"
                 + "________________ \n"
-                + "You have booked: " + carryOnBagsInput.getValue() + " carry on bags, and: " + checkedBagsInput.getValue() + " checked bags.";
+                + "You have booked: " + carryOnBagsInput.getValue() + " carry on bags, and: " + checkedBagsInput.getValue() + " checked bags.";*/
     }
     
     private boolean validateCard(String card) {
