@@ -34,7 +34,7 @@
                         </HBox>
                      </children>
                   </AnchorPane>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="451.0" prefWidth="600.0" SplitPane.resizableWithParent="false">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="561.0" prefWidth="600.0" SplitPane.resizableWithParent="false">
                      <children>
                         <Label layoutX="83.0" layoutY="20.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
                         <Label id="flightInfo" fx:id="flightInfo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="83.0" layoutY="75.0" styleClass="flight_info" text="Flight info should be here" />
@@ -131,7 +131,9 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="confirm" layoutY="382.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="34.0" prefWidth="123.0" styleClass="search_button" text="Confirm" textOverrun="CLIP" AnchorPane.leftAnchor="239.0" AnchorPane.rightAnchor="238.0" />
+                        <Button fx:id="confirm" layoutY="382.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="34.0" prefWidth="123.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="239.0" AnchorPane.rightAnchor="238.0" />
+                        <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="443.0" styleClass="flight_info" />
+                        <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="475.0" styleClass="flight_info" />
                      </children>
                   </AnchorPane>
               </items>

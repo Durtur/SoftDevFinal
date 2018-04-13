@@ -25,6 +25,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.TextAlignment;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -81,6 +82,10 @@ public class PaymentPageController implements Initializable {
     private Label flightInfo;
     @FXML
     private Button confirm;
+    @FXML
+    private Label confirmBook;
+    @FXML
+    private Label emailSending;
 
     /**
      * Initializes the controller class.
@@ -91,6 +96,18 @@ public class PaymentPageController implements Initializable {
         cardNumberInput.setPromptText("Enter 16 digits no spaces");
         expiryDateInput.setPromptText("Enter 4 digits no spaces");
         ssnInput.setPromptText("Enter 10 digits no spaces");
+        
+        confirmBook.setMaxWidth(Double.MAX_VALUE);
+        AnchorPane.setLeftAnchor(confirmBook, 0.0);
+        AnchorPane.setRightAnchor(confirmBook, 0.0);
+        confirmBook.setAlignment(Pos.CENTER);
+        confirmBook.setAlignment(Pos.CENTER);
+        
+        emailSending.setMaxWidth(Double.MAX_VALUE);
+        AnchorPane.setLeftAnchor(emailSending, 0.0);
+        AnchorPane.setRightAnchor(emailSending, 0.0);
+        emailSending.setAlignment(Pos.CENTER);
+        emailSending.setAlignment(Pos.CENTER);
         
         //disables confirm button until all TextField are entered 
         BooleanBinding booleanBind = fullNameInput.textProperty().isEmpty()
@@ -206,6 +223,8 @@ public class PaymentPageController implements Initializable {
                 + "Passenger/s: " + "\n"
                 + fullNameInput.getText() + ", ssn: " + ssnInput.getText();
             
+            confirmBook.setText("Booking confirmed!");
+            emailSending.setText("An email has been sent to " + emailInput1.getText());
             sendFromGMail(from, pass, recip, subject, body);
         }
     }
