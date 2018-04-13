@@ -6,11 +6,14 @@
 package controllers;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -91,6 +94,15 @@ public class PaymentPageController implements Initializable {
                                         .or(expiryDateInput.textProperty().isEmpty())
                                             .or(securityNumberInput.textProperty().isEmpty());
         confirm.disableProperty().bind(booleanBind);
+        
+        /*carryBagsP1.addListChangeListener(new ListChangeListener() {
+            @Override
+            public void onChanged(ListChangeListener.Change c) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });*/
+        carryBagsP1.addListener((ListChangeListener)(c -> {
+            System.out.println("Bags changed");/* ... */}));
     }    
     
     /**
@@ -175,6 +187,8 @@ public class PaymentPageController implements Initializable {
         }
     }
     
+    
+    
     /**
      * adds numbers into choice boxes for bags
      */
@@ -205,16 +219,17 @@ public class PaymentPageController implements Initializable {
     
     @FXML
     public void setFlightInfo(Flight currentFlight) {
-        
+        SimpleDateFormat ft = 
+        new SimpleDateFormat ("E dd MMM yyyy 'at' HH:mm");
         currFlight = currentFlight;
         flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
-            + " to " + currFlight.getArrivalAirport() + " on " + currFlight.getDepartureTime() + "\nPrice "
+            + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
             + currFlight.getPrice() + " kr");
         
         subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
         
         body = "Thanks for using FlightCo! Here's some information about your flight: \n"+ currFlight.getFlightNumber() + " - " + currFlight.getAirline()
-                    + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + currFlight.getDepartureTime()
+                    + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + ft.format(currFlight.getDepartureTime())
                     + "\n" + currFlight.getDuration() + " minutes \n"
                 + "________________ \n"
                 + "You have booked: " + carryOnBagsInput.getValue() + " carry on bags, and: " + checkedBagsInput.getValue() + " checked bags.";
