@@ -125,6 +125,8 @@
                                           <TextField fx:id="securityNumberInput" layoutX="317.0" layoutY="291.0" />
                                        </children>
                                     </VBox>
+                                    <Label minWidth="-Infinity" styleClass="payment_info" text="Email:" textOverrun="CLIP" />
+                                    <TextField fx:id="emailInput1" />
                                  </children>
                               </VBox>
                            </children>

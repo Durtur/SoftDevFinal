@@ -7,6 +7,7 @@ package controllers;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.beans.binding.BooleanBinding;
@@ -50,11 +51,11 @@ public class PaymentPageController implements Initializable {
     
     private static String username = "softdevtest2018";
     private static String password = "throunhugbunadar";
-    private static String recipient = "softdevtest2018@gmail.com";
+    private String recipient;
     
     private String from = username;
     private String pass = password;
-    private String[] to = {recipient};
+    private ArrayList<String> recip = new ArrayList<String>();
     private String subject;
     private String body; 
     
@@ -75,6 +76,8 @@ public class PaymentPageController implements Initializable {
     @FXML
     private TextField securityNumberInput;
     @FXML
+    private TextField emailInput1;
+    @FXML
     private Label flightInfo;
     @FXML
     private Button confirm;
@@ -94,7 +97,8 @@ public class PaymentPageController implements Initializable {
                             .or(ssnInput.textProperty().isEmpty())
                                       .or(cardNumberInput.textProperty().isEmpty())
                                         .or(expiryDateInput.textProperty().isEmpty())
-                                            .or(securityNumberInput.textProperty().isEmpty());
+                                            .or(securityNumberInput.textProperty().isEmpty())
+                                                .or(emailInput1.textProperty().isEmpty());
         confirm.disableProperty().bind(booleanBind);
         
         /*carryBagsP1.addListChangeListener(new ListChangeListener() {
@@ -185,16 +189,24 @@ public class PaymentPageController implements Initializable {
         
         else {
             carryBagsP1.addListener((ListChangeListener)(c -> {
+                
                 System.out.println("Bags changed");/* ... */}));
+            
+            
             
             subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
         
-            body = "Thanks for using FlightCo! Here's some information about your flight: \n"+ currFlight.getFlightNumber() + " - " + currFlight.getAirline()
-                    + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + ft.format(currFlight.getDepartureTime())
-                    + "\n" + currFlight.getDuration() + " minutes \n"
+            body = "Thanks for using FlightCo! Here's some information about your flight: \n" + "Flight " + currFlight.getFlightNumber() + " - " + currFlight.getAirline()
+                    + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + "On " + ft.format(currFlight.getDepartureTime())
+                    + "\n" + "Duration " + currFlight.getDuration() + " minutes"
+                    + "\n" + "Arrival on " + ft.format(currFlight.getArrivalTime()) + "\n"
                 + "________________ \n"
-                + "You have booked: " + carryOnBagsInput.getValue().substring(0,1) + " carry on bags, and: " + checkedBagsInput.getValue().substring(0,1) + " checked bags.";
-            sendFromGMail(from, pass, to, subject, body);
+                + "You have booked: " + carryOnBagsInput.getValue().substring(0,1) + " carry on bags, and " + checkedBagsInput.getValue().substring(0,1) + " checked bags." + "\n"
+                + "________________ \n"
+                + "Passenger/s: " + "\n"
+                + fullNameInput.getText() + ", ssn: " + ssnInput.getText();
+            
+            sendFromGMail(from, pass, recip, subject, body);
         }
     }
     
@@ -295,7 +307,10 @@ public class PaymentPageController implements Initializable {
      * @param subject
      * @param body 
      */
-    private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+    private void sendFromGMail(String from, String pass, ArrayList recip, String subject, String body) {
+        recipient = emailInput1.getText();
+        recip.add(recipient);
+        
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
@@ -311,10 +326,10 @@ public class PaymentPageController implements Initializable {
         try {
             message.setFrom(new InternetAddress(from));
             InternetAddress[] toAddress;
-            toAddress = new InternetAddress[to.length];
+            toAddress = new InternetAddress[recip.size()];
             
-            for( int i = 0; i < to.length; i++ ) {
-                toAddress[i] = new InternetAddress(to[i]);
+            for( int i = 0; i < recip.size(); i++ ) {
+                toAddress[i] = new InternetAddress((String) recip.get(i));
             }
             
             for( int i = 0; i < toAddress.length; i++) {
