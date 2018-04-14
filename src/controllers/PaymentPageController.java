@@ -34,6 +34,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import model.Booking;
 import model.Flight;
 
 /**
@@ -47,6 +48,7 @@ public class PaymentPageController implements Initializable {
     ObservableList checkBagsP1 = FXCollections.observableArrayList();
     
     BookingPageController booking;
+    Booking bookThis;
     
     public Flight currFlight;
     
@@ -97,6 +99,7 @@ public class PaymentPageController implements Initializable {
         expiryDateInput.setPromptText("Enter 4 digits no spaces");
         ssnInput.setPromptText("Enter 10 digits no spaces");
         
+        // Positioning confirmation text that appears after pressing "Book"
         confirmBook.setMaxWidth(Double.MAX_VALUE);
         AnchorPane.setLeftAnchor(confirmBook, 0.0);
         AnchorPane.setRightAnchor(confirmBook, 0.0);
@@ -226,6 +229,14 @@ public class PaymentPageController implements Initializable {
             confirmBook.setText("Booking confirmed!");
             emailSending.setText("An email has been sent to " + emailInput1.getText());
             sendFromGMail(from, pass, recip, subject, body);
+            
+            //bookThis.setFlights(currFlight.getFlightNumber());
+            //bookThis.setBookingNo("12345");
+            //bookThis.setNoPassengers();
+            //bookThis.setCarryOnBags(carryOnBagsInput.getValue().substring(0,1));
+            //bookThis.setCheckInBags(checkedBagsInput.getValue().substring(0,1));
+            //bookThis.setFulLName(fullNameInput.getText());
+            //bookThis.setSsn(ssnInput.getText());
         }
     }
     
