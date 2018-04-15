@@ -248,8 +248,8 @@ public class PaymentPageController implements Initializable {
                     + "\n" + "Duration " + currFlight.getDuration() + " minutes"
                     + "\n" + "Arrival on " + ft.format(currFlight.getArrivalTime()) + "\n"
                 + "________________ \n"
-                + "You have booked: " + carryOnBagsInput.getValue().substring(0,1) + " carry on bags, and " + checkedBagsInput.getValue().substring(0,1) + " checked bags." + "\n"
-                + "Total price: " + (currFlight.getPrice()*numPassengers) +"\n"   
+                + "You have booked: " + numberOfCarryOnBags() + " carry on bags " + "(+" + getPriceOfCOB() + " kr), and " + numberOfCheckInBags() + " checked bags "+ "(+" + getPriceOfCB() +  " kr). \n"
+                + "Total price: " + ((currFlight.getPrice()*numPassengers)+ getPriceOfCOB() + getPriceOfCB()) +"\n"   
                 + "________________ \n"
                 + "Passenger/s: " + numPassengers +"\n"
                 + fullNameInput.getText() + ", ssn: " + ssnInput.getText();
@@ -297,6 +297,38 @@ public class PaymentPageController implements Initializable {
         checkedBagsInput.getItems().addAll(checkBagsP1);
         carryOnBagsInput.getItems().addAll(carryBagsP1);
     }
+    
+    private int numberOfCarryOnBags(){
+        int numCOB = Integer.parseInt(carryOnBagsInput.getValue().substring(0, 1));
+
+        return numCOB;
+    }
+    private int getPriceOfCOB(){  
+        //for carryOnBags
+        String priceCOB = carryOnBagsInput.getValue();
+        if("0".equals(priceCOB.substring(0,1))) priceCOB = "0";
+        
+        int price = Integer.parseInt(priceCOB.substring(4, 8));       
+        
+        return price;
+    }
+    
+    private int numberOfCheckInBags(){
+        int numCB = Integer.parseInt(checkedBagsInput.getValue().substring(0, 1));
+
+        return numCB;
+    }
+    
+    private int getPriceOfCB(){
+        //for checkedBags
+        String priceCB = checkedBagsInput.getValue();
+        if("0".equals(priceCB.substring(0,1))) priceCB = "0";
+   
+        int price = Integer.parseInt(priceCB.substring(4, 8));
+      
+        return price;
+    }
+    
     
     @FXML
     public void setFlightInfo(Flight currentFlight, int passengers) {
