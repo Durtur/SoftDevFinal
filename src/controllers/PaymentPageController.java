@@ -8,6 +8,7 @@ package controllers;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import javafx.beans.binding.BooleanBinding;
@@ -88,6 +89,29 @@ public class PaymentPageController implements Initializable {
     private Label confirmBook;
     @FXML
     private Label emailSending;
+    @FXML
+    private Button butES;
+    @FXML
+    private Label labelYourBook;
+    @FXML
+    private Label labelFullName;
+    @FXML
+    private Label labelSsn;
+    @FXML
+    private Label labelChecked;
+    @FXML
+    private Label labelCarryOn;
+    @FXML
+    private Label labelCardNum;
+    @FXML
+    private Label labelExpiry;
+    @FXML
+    private Label labelSecurity;
+    @FXML
+    private Label labelEmail;
+    
+    private ResourceBundle bundle;
+    private Locale locale;
 
     /**
      * Initializes the controller class.
@@ -378,6 +402,26 @@ public class PaymentPageController implements Initializable {
         } catch (MessagingException me) {
             me.printStackTrace();
         }
+        
+    }
+    
+    @FXML private void btnES(ActionEvent event) {
+        loadLang("es");
+    }
+    
+    private void loadLang(String lang) {
+        locale = new Locale(lang);
+        bundle = ResourceBundle.getBundle("utils.lang", locale);
+        labelYourBook.setText(bundle.getString("labelYourBook"));
+        labelFullName.setText(bundle.getString("labelFullName"));
+        labelSsn.setText(bundle.getString("labelSsn"));
+        labelChecked.setText(bundle.getString("labelChecked"));
+        labelCarryOn.setText(bundle.getString("labelCarryOn"));
+        labelCardNum.setText(bundle.getString("labelCardNum"));
+        labelExpiry.setText(bundle.getString("labelExpiry"));
+        labelSecurity.setText(bundle.getString("labelSecurity"));
+        labelEmail.setText(bundle.getString("labelEmail"));
+        confirm.setText(bundle.getString("confirm"));
     }
     
 }
