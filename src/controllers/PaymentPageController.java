@@ -52,6 +52,7 @@ public class PaymentPageController implements Initializable {
     Booking bookThis;
     
     public Flight currFlight;
+    int numPassengers;
     
     private static String username = "softdevtest2018";
     private static String password = "throunhugbunadar";
@@ -240,14 +241,17 @@ public class PaymentPageController implements Initializable {
             
             subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
         
-            body = "Thanks for using FlightCo! Here's some information about your flight: \n" + "Flight " + currFlight.getFlightNumber() + " - " + currFlight.getAirline()
+            body = "Thanks for using FlightCo! Here's some information about your flight: \n"
+                    + "________________ \n"
+                    + "Flight " + currFlight.getFlightNumber() + " - " + currFlight.getAirline()
                     + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + "On " + ft.format(currFlight.getDepartureTime())
                     + "\n" + "Duration " + currFlight.getDuration() + " minutes"
                     + "\n" + "Arrival on " + ft.format(currFlight.getArrivalTime()) + "\n"
                 + "________________ \n"
                 + "You have booked: " + carryOnBagsInput.getValue().substring(0,1) + " carry on bags, and " + checkedBagsInput.getValue().substring(0,1) + " checked bags." + "\n"
+                + "Total price: " + (currFlight.getPrice()*numPassengers) +"\n"   
                 + "________________ \n"
-                + "Passenger/s: " + "\n"
+                + "Passenger/s: " + numPassengers +"\n"
                 + fullNameInput.getText() + ", ssn: " + ssnInput.getText();
             
             confirmBook.setText("Booking confirmed!");
@@ -295,20 +299,14 @@ public class PaymentPageController implements Initializable {
     }
     
     @FXML
-    public void setFlightInfo(Flight currentFlight) {
+    public void setFlightInfo(Flight currentFlight, int passengers) {
         
         currFlight = currentFlight;
+        numPassengers = passengers;
         flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
             + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
-            + currFlight.getPrice() + " kr");
+            + (currFlight.getPrice()*numPassengers) + " kr");
         
-        /*subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
-        
-        body = "Thanks for using FlightCo! Here's some information about your flight: \n"+ currFlight.getFlightNumber() + " - " + currFlight.getAirline()
-                    + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + ft.format(currFlight.getDepartureTime())
-                    + "\n" + currFlight.getDuration() + " minutes \n"
-                + "________________ \n"
-                + "You have booked: " + carryOnBagsInput.getValue() + " carry on bags, and: " + checkedBagsInput.getValue() + " checked bags.";*/
     }
     
     private boolean validateCard(String card) {
