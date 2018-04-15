@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Símon Örn Reynisson <sor7@hi.is>
  */
 public class Booking {
-	private ArrayList<Flight> flights;
+    private ArrayList<Flight> flights;
     private String bookingNo;
     private int noPassengers, carryOnBags, checkInBags;
     private String[] fullName, ssn;

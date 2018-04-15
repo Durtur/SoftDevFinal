@@ -49,5 +49,6 @@ public class BookingController {
     
     public boolean book(ArrayList<Flight> flight, ArrayList<String> name, ArrayList<String> ssn) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //return db.addBooking(booking);
     }
 }
