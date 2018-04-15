@@ -117,6 +117,10 @@ public class SearchpageController implements Initializable {
     public Stage getStage(){
         return stage;
     }
+    
+    public int getNumPassengers(){
+        return Integer.valueOf(numPassengersCombo.getSelectionModel().getSelectedItem());
+    }
 
     private void startAutoComplete() {
         HashSet<String> autoCompletes = new HashSet<String>(search.getAirports());
