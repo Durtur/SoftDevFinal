@@ -52,6 +52,7 @@ public class PaymentPageController implements Initializable {
     Booking bookThis;
     
     public Flight currFlight;
+    public Flight currFlightBack;
     int numPassengers;
     
     private static String username = "softdevtest2018";
@@ -335,14 +336,27 @@ public class PaymentPageController implements Initializable {
     
     
     @FXML
-    public void setFlightInfo(Flight currentFlight, int passengers) {
+    public void setFlightInfo(ArrayList<Flight> twoFlightsArray, int passengers) {
         
-        currFlight = currentFlight;
+        currFlight = twoFlightsArray.get(0);
+        currFlightBack = twoFlightsArray.get(1);
         numPassengers = passengers;
-        flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
-            + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
-            + (currFlight.getPrice()*numPassengers) + " kr");
-        
+
+        if(currFlightBack != null){
+            flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
+                    + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
+                    + (currFlight.getPrice()*numPassengers) + " kr" + "\n"
+                    + "Return Flight " + currFlightBack.getFlightNumber() + " from " + currFlightBack.getDepartureAirport()
+                    + " to " + currFlightBack.getArrivalAirport() + " on " + ft.format(currFlightBack.getDepartureTime()) + "\nPrice "
+                    + (currFlightBack.getPrice()*numPassengers) + " kr");
+        }
+
+        if(currFlightBack == null){
+            flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
+                + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
+                + (currFlight.getPrice()*numPassengers) + " kr");
+        }
+    
     }
     
     private boolean validateCard(String card) {
