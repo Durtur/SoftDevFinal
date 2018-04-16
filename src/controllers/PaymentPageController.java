@@ -287,9 +287,11 @@ public class PaymentPageController implements Initializable {
         }
         
         ArrayList<Flight> flightsToBook = new ArrayList();
-        flightsToBook.add(currFlight);
-        flightsToBook.add(currFlightBack);
         
+        flightsToBook.add(currFlight);
+        if(currFlightBack!=null)flightsToBook.add(currFlightBack);
+        
+       
         Booking booking = new Booking(flightsToBook, null, numPassengers, numberOfCarryOnBags(), numberOfCheckInBags(), namesToBook, ssnToBook);
     
         db.addBooking(booking);
