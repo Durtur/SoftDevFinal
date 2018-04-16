@@ -27,7 +27,7 @@
                            <children>
                               <ImageView fitHeight="148.0" fitWidth="988.0" layoutX="-1.0" layoutY="6.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../styles/img/pexels-photo-746421(1).jpeg" />
+                                    <Image url="@../styles/img/paymentPhoto.jpeg" />
                                  </image>
                               </ImageView>
                            </children>
@@ -38,8 +38,8 @@
                      <children>
                         <Button fx:id="butES" layoutX="560.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnES" text="ES" />
                         <Label fx:id="labelYourBook" layoutX="83.0" layoutY="20.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
-                        <Label id="flightInfo" fx:id="flightInfo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="83.0" layoutY="57.0" styleClass="flight_info" text="Flight info should be here" />
-                        <HBox layoutX="76.0" layoutY="131.0" prefHeight="198.0" prefWidth="432.0" spacing="100.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0">
+                        <Label id="flightInfo" fx:id="flightInfo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="83.0" layoutY="71.0" styleClass="flight_info" text="Flight info should be here" />
+                        <HBox layoutX="83.0" layoutY="195.0" prefHeight="198.0" prefWidth="432.0" spacing="100.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0">
                            <children>
                               <VBox>
                                  <children>
@@ -126,15 +126,23 @@
                                           <TextField fx:id="securityNumberInput" layoutX="317.0" layoutY="291.0" />
                                        </children>
                                     </VBox>
-                                    <Label fx:id="labelEmail" minWidth="-Infinity" styleClass="payment_info" text="Email:" textOverrun="CLIP" />
-                                    <TextField fx:id="emailInput1" />
+                                    <VBox>
+                                       <children>
+                                          <Label fx:id="labelEmail" layoutX="317.0" layoutY="327.0" minWidth="-Infinity" styleClass="payment_info" text="Email:" textOverrun="CLIP">
+                                             <padding>
+                                                <Insets bottom="5.0" />
+                                             </padding>
+                                          </Label>
+                                          <TextField fx:id="emailInput1" layoutX="317.0" layoutY="344.0" />
+                                       </children>
+                                    </VBox>
                                  </children>
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="confirm" layoutY="382.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="34.0" prefWidth="123.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="239.0" AnchorPane.rightAnchor="238.0" />
-                        <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="443.0" styleClass="flight_info" />
-                        <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="475.0" styleClass="flight_info" />
+                        <Button fx:id="confirm" layoutX="239.0" layoutY="446.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="34.0" prefWidth="123.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="239.0" AnchorPane.rightAnchor="238.0" />
+                        <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="507.0" styleClass="flight_info" />
+                        <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="539.0" styleClass="flight_info" />
                      </children>
                   </AnchorPane>
               </items>
