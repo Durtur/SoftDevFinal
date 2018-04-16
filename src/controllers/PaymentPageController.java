@@ -27,6 +27,8 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -67,6 +69,8 @@ public class PaymentPageController implements Initializable {
     
     SimpleDateFormat ft = new SimpleDateFormat ("E dd MMM yyyy 'at' HH:mm");
     
+    
+    ArrayList<TextField> allSsn,allNameFields;
     @FXML
     private TextField fullNameInput;
     @FXML
@@ -114,12 +118,21 @@ public class PaymentPageController implements Initializable {
     
     private ResourceBundle bundle;
     private Locale locale;
+    @FXML
+    private VBox additionalPassengers;
+    @FXML
+    private Label additionalPassengersLabel;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        allNameFields = new ArrayList();
+        allSsn=new ArrayList();
+        allSsn.add(ssnInput);
+        allNameFields.add(fullNameInput);
+        
         populateBoxes();
         cardNumberInput.setPromptText("Enter 16 digits no spaces");
         expiryDateInput.setPromptText("Enter 4 digits no spaces");
@@ -155,6 +168,26 @@ public class PaymentPageController implements Initializable {
         });*/
         
     }    
+    
+    
+    private void addPassengerFields(int num){
+        HBox currentRow;
+        TextField nextName, nextSsn;
+        for(int i = 1; i<num;i++){
+            currentRow = new HBox();
+            nextName=new TextField();
+            nextSsn=new TextField();
+            nextName.setPromptText("Name of passenger " + (i+1));
+            nextSsn.setPromptText("Social security number of passenger " + (i+1));
+            
+            allNameFields.add(nextName);
+            allSsn.add(nextSsn);
+            currentRow.getChildren().addAll(nextName,nextSsn);
+            additionalPassengers.getChildren().add(currentRow);
+            
+        }
+        
+    }
     
     /**
      * checks if inputs are valid and sends confirmation email if so 
@@ -358,9 +391,12 @@ public class PaymentPageController implements Initializable {
     }
     
     
-    @FXML
     public void setFlightInfo(ArrayList<Flight> twoFlightsArray, int passengers) {
-        
+        if(passengers>1){
+            addPassengerFields(passengers);
+        }else{
+            additionalPassengersLabel.setVisible(false);
+        }
         currFlight = twoFlightsArray.get(0);
         currFlightBack = twoFlightsArray.get(1);
         numPassengers = passengers;

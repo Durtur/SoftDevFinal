@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
+import model.Airline;
 import model.Flight;
 import model.FlightPair;
 import model.SearchQuery;
@@ -38,11 +39,12 @@ public class SearchController {
      * @return
      */
     public ArrayList<Flight> search(SearchQuery sq) {
-
+        PriceComparator compare=new PriceComparator();
         ArrayList<Flight> flightsThere = db.getFlights(sq.getDepartingFrom(), sq.getArrivingTo(), sq.getFirstDate(), sq.getPassengerNo());
         flightsThere = matchWithDate(flightsThere, sq.getFirstDate());
-        Collections.sort(flightsThere);
+       
         if(sq.getSecondDate()==null){
+             Collections.sort(flightsThere,compare);
               return flightsThere;
         }
         ArrayList<Flight> flightsBack = db.getFlights(sq.getArrivingTo(), sq.getDepartingFrom(), sq.getSecondDate(), sq.getPassengerNo());
@@ -56,11 +58,11 @@ public class SearchController {
         Collections.sort(combinedList);
         ArrayList<Flight> finalList = new ArrayList();
         for (FlightPair f : combinedList) {
-            System.out.println(f);
             finalList.add(f.flightOut);
             finalList.add(f.flightBack);
 
         }
+        Collections.sort(finalList,compare);
         return finalList;
     }
 
@@ -95,14 +97,44 @@ public class SearchController {
     }
 
     protected class PriceComparator implements Comparator {
-
+        ArrayList<Airline> airlines;
+        DatabaseManager db;
+        public PriceComparator(){
+            db=new DatabaseManager();
+            airlines=db.getAirlines();
+            
+        }
         @Override
         public int compare(Object o1, Object o2) {
             Flight fl1, fl2;
             fl1 = (Flight) o1;
             fl2 = (Flight) o2;
-
-            return fl1.getPrice() - fl2.getPrice();
+            if(fl1.getPrice() - fl2.getPrice() != 0){
+                return fl1.getPrice() - fl2.getPrice();
+            }else{
+                int airl1,airl2;
+                airl1=0;
+                airl2=0;
+                boolean foundOne,foundTwo;
+                foundOne=false;
+                foundTwo=false;
+                for(int i = 0; i < airlines.size();i++){
+                    if(airlines.get(i).getName().equals(fl1.getAirline())){
+                        
+                        airl1=airlines.get(i).getPriority();
+                     
+                        foundOne=true;
+                    }
+                    if(airlines.get(i).getName().equals(fl2.getAirline())){
+                        airl2=airlines.get(i).getPriority();
+                        foundTwo=true;
+                    }
+                    if(foundOne&&foundTwo)break;
+                    
+                }
+                return airl2-airl1;
+            }
+          
         }
 
     }
