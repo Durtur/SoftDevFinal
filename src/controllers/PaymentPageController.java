@@ -262,6 +262,7 @@ public class PaymentPageController implements Initializable {
                     + fullNameInput.getText() + ", ssn: " + ssnInput.getText();
             }    
             
+            
             if(currFlightBack ==null){
                 body = "Thanks for using FlightCo! Here's some information about your flight: \n"
                         + "________________ \n"
