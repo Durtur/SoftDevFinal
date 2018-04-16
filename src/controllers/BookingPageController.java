@@ -151,18 +151,36 @@ public class BookingPageController implements Initializable {
         try {
 
             ArrayList<Flight> flights = searchPage.getFoundFlights();
-            Flight myFlight;
-            myFlight = flights.get(flightToBookIndex);
+            ArrayList<Flight> twoFlightsArray = new ArrayList();
+            
+            Flight myFlightThere;
+            Flight myFlightBack;
+            
+            myFlightThere = flights.get(flightToBookIndex);
+            twoFlightsArray.add(myFlightThere);
+            
+            
+            if(!searchPage.isOneWay()){
+                myFlightBack = flights.get(flightToBookIndex+1);
+                twoFlightsArray.add(myFlightBack);
+            } else { 
+                myFlightBack = null;
+                twoFlightsArray.add(myFlightBack);
+            }
             
             int numPassengers = searchPage.getNumPassengers();
 
-            System.out.println("the flight is " + myFlight);
+            System.out.println("the flight is " + myFlightThere);
+            if(!searchPage.isOneWay()){
+                System.out.println("the flight is " + myFlightBack);
+            }
+            
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PaymentPage.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             payment = (PaymentPageController) fxmlLoader.getController();
-            payment.setFlightInfo(myFlight, numPassengers);
+            payment.setFlightInfo(twoFlightsArray, numPassengers);
             stage.setTitle("Booking details");
             stage.setScene(new Scene(root, 800, 800));
             
