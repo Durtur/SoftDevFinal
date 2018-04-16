@@ -121,7 +121,12 @@ public class SearchpageController implements Initializable {
     public int getNumPassengers(){
         return Integer.valueOf(numPassengersCombo.getSelectionModel().getSelectedItem());
     }
-
+    
+    public boolean isOneWay(){
+        return isOneWay.isSelected();
+    }
+    
+    
     private void startAutoComplete() {
         HashSet<String> autoCompletes = new HashSet<String>(search.getAirports());
         departureField = (AutoCompleteTextField) departingFrom;
