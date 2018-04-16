@@ -282,8 +282,8 @@ public class PaymentPageController implements Initializable {
         String[] ssnToBook = new String[numPassengers];
         
         for(int i = 0; i < allSsn.size(); i++){
-            namesToBook[i] = allSsn.get(i).getText();
-            ssnToBook[i] = allNameFields.get(i).getText();
+            namesToBook[i] = allNameFields.get(i).getText();
+            ssnToBook[i] = allSsn.get(i).getText();
         }
         
         ArrayList<Flight> flightsToBook = new ArrayList();
@@ -291,21 +291,24 @@ public class PaymentPageController implements Initializable {
         flightsToBook.add(currFlight);
         if(currFlightBack!=null)flightsToBook.add(currFlightBack);
         
-       
+                                    //(ArrayList<Flight> flights, String bookingNo, int noPassengers, int carryOnBags, int checkInBags, String[] fullName, String[] ssn)
         Booking booking = new Booking(flightsToBook, null, numPassengers, numberOfCarryOnBags(), numberOfCheckInBags(), namesToBook, ssnToBook);
     
-        db.addBooking(booking);
+        String bookingNumbers = db.addBooking(booking);
             
             subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
         
-            if(currFlightBack != null){
+            
                 body = "Thanks for using FlightCo! Here's some information about your flight: \n"
-                        + "________________ \n"
+                        + "________________ \n" 
+                        + "Booking number: " + bookingNumbers.substring(0,5) + "\n"
                         + "Flight " + currFlight.getFlightNumber() + " - " + currFlight.getAirline()
                         + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + "On " + ft.format(currFlight.getDepartureTime())
                         + "\n" + "Duration " + currFlight.getDuration() + " minutes"
                         + "\n" + "Arrival on " + ft.format(currFlight.getArrivalTime()) + "\n"
-                        + "________________ \n"
+                        + "________________ \n";
+                if(currFlightBack != null){
+                     body=body+  "Booking number: " + bookingNumbers.substring(5,10)+ "\n"
                         + "Return Flight " + currFlightBack.getFlightNumber() + " - " + currFlightBack.getAirline()
                         + "\n" + "From " + currFlightBack.getDepartureAirport() + " to " + currFlightBack.getArrivalAirport() + "\n" + "On " + ft.format(currFlightBack.getDepartureTime())
                         + "\n" + "Duration " + currFlightBack.getDuration() + " minutes"
@@ -314,24 +317,18 @@ public class PaymentPageController implements Initializable {
                     + "You have booked: " + numberOfCarryOnBags() + " carry on bags " + "(+" + getPriceOfCOB() + " kr), and " + numberOfCheckInBags() + " checked bags "+ "(+" + getPriceOfCB() +  " kr). \n"
                     + "Total price: " + ((currFlight.getPrice()*numPassengers) + (currFlightBack.getPrice()*numPassengers)+ getPriceOfCOB() + getPriceOfCB()) +" kr. \n"   
                     + "________________ \n"
-                    + "Passenger/s: " + numPassengers +"\n"
-                    + fullNameInput.getText() + ", ssn: " + ssnInput.getText();
-            }    
-            
-            
-            if(currFlightBack ==null){
-                body = "Thanks for using FlightCo! Here's some information about your flight: \n"
-                        + "________________ \n"
-                        + "Flight " + currFlight.getFlightNumber() + " - " + currFlight.getAirline()
-                        + "\n" + "From " + currFlight.getDepartureAirport() + " to " + currFlight.getArrivalAirport() + "\n" + "On " + ft.format(currFlight.getDepartureTime())
-                        + "\n" + "Duration " + currFlight.getDuration() + " minutes"
-                        + "\n" + "Arrival on " + ft.format(currFlight.getArrivalTime()) + "\n"
-                    + "________________ \n"
+                    + "Passenger/s: " + numPassengers +"\n";
+                 
+                }else{
+                    body=body+"________________ \n"
                     + "You have booked: " + numberOfCarryOnBags() + " carry on bags " + "(+" + getPriceOfCOB() + " kr), and " + numberOfCheckInBags() + " checked bags "+ "(+" + getPriceOfCB() +  " kr). \n"
-                    + "Total price: " + ((currFlight.getPrice()*numPassengers)+ getPriceOfCOB() + getPriceOfCB()) +" kr. \n"   
+                    + "Total price: " + ((currFlight.getPrice()*numPassengers) + getPriceOfCOB() + getPriceOfCB()) +" kr. \n"   
                     + "________________ \n"
-                    + "Passenger/s: " + numPassengers +"\n"
-                    + fullNameInput.getText() + ", ssn: " + ssnInput.getText();
+                    + "Passenger/s: " + numPassengers +"\n";
+                 
+                }
+            for(int i = 0; i < allNameFields.size();i++){
+                  body=body + allNameFields.get(i).getText() + " ssn: " + allSsn.get(i).getText() +"\n"; 
             }
             
             confirmBook.setText("Booking confirmed!");
