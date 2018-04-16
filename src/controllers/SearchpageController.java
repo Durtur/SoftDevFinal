@@ -203,7 +203,7 @@ public class SearchpageController implements Initializable {
         secondDateD = parseDateFromLocalDate(secondDate.getValue());
 
         SearchQuery sq = new SearchQuery(firstDateD, secondDateD, departingFrom.getText(), arrivingTo.getText(), null, Integer.valueOf(numPassengersCombo.getSelectionModel().getSelectedItem()));
-        System.out.println(sq);
+  
 
         foundFlights = search.search(sq);
 
