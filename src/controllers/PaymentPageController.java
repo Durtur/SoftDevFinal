@@ -343,9 +343,10 @@ public class PaymentPageController implements Initializable {
         numPassengers = passengers;
 
         if(currFlightBack != null){
-            flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
+            flightInfo.setText("Outbound Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
                     + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
                     + (currFlight.getPrice()*numPassengers) + " kr" + "\n"
+                    + "\n"
                     + "Return Flight " + currFlightBack.getFlightNumber() + " from " + currFlightBack.getDepartureAirport()
                     + " to " + currFlightBack.getArrivalAirport() + " on " + ft.format(currFlightBack.getDepartureTime()) + "\nPrice "
                     + (currFlightBack.getPrice()*numPassengers) + " kr");
