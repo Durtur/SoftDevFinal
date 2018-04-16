@@ -215,14 +215,16 @@ public class DatabaseManager {
 
     }
 
-    public void addBooking(Booking booking) {
+    public String addBooking(Booking booking) {
         try {
             Connection conn = connect();
             ArrayList<Flight> flightsToBook = booking.getFlights();
+            String finalBooking = "";
             for (Flight f : flightsToBook) {
                 String sql = "INSERT INTO Bookings(flightNumber,bookingNo,noPassengers,fullName,ssn,carryOnBags,checkInBags) VALUES(?,?,?,?,?,?,?)";
                 PreparedStatement p = conn.prepareStatement(sql);
                 String bookingNo = getNextAvailableBookingNo(f.getFlightNumber(), conn);
+                finalBooking+=bookingNo;
                 int i;
                 for (i = 0; i < booking.getSsn().length; i++) {
                     System.out.println(i);
@@ -237,9 +239,11 @@ public class DatabaseManager {
                 }
                 reserveFlightSeats(f.getFlightNumber(), i , conn);
             }
+            return finalBooking;
 
         } catch (Exception ex) {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
+            return "error";
         }
 
     }
