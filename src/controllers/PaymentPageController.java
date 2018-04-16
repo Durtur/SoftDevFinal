@@ -5,6 +5,7 @@
  */
 package controllers;
 
+import database.DatabaseManager;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,11 +52,12 @@ public class PaymentPageController implements Initializable {
     ObservableList checkBagsP1 = FXCollections.observableArrayList();
     
     BookingPageController booking;
-    Booking bookThis;
+    DatabaseManager db; 
     
     public Flight currFlight;
     public Flight currFlightBack;
     int numPassengers;
+    
     
     private static String username = "softdevtest2018";
     private static String password = "throunhugbunadar";
@@ -128,6 +130,8 @@ public class PaymentPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        db = new DatabaseManager();
+        
         allNameFields = new ArrayList();
         allSsn=new ArrayList();
         allSsn.add(ssnInput);
@@ -269,9 +273,26 @@ public class PaymentPageController implements Initializable {
         else {
             carryBagsP1.addListener((ListChangeListener)(c -> {
                 
-                System.out.println("Bags changed");/* ... */}));
+            System.out.println("Bags changed");/* ... */}));
             
-            
+        /**
+         * creates the booking
+         */
+        String[] namesToBook = new String[numPassengers];
+        String[] ssnToBook = new String[numPassengers];
+        
+        for(int i = 0; i < allSsn.size(); i++){
+            namesToBook[i] = allSsn.get(i).getText();
+            ssnToBook[i] = allNameFields.get(i).getText();
+        }
+        
+        ArrayList<Flight> flightsToBook = new ArrayList();
+        flightsToBook.add(currFlight);
+        flightsToBook.add(currFlightBack);
+        
+        Booking booking = new Booking(flightsToBook, null, numPassengers, numberOfCarryOnBags(), numberOfCheckInBags(), namesToBook, ssnToBook);
+    
+        db.addBooking(booking);
             
             subject = "Booking information of your trip to " + currFlight.getArrivalAirport();
         
