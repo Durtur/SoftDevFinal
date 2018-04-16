@@ -38,7 +38,7 @@
                      <children>
                         <Button fx:id="butES" layoutX="560.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnES" text="ES" />
                         <Label fx:id="labelYourBook" layoutX="83.0" layoutY="20.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
-                        <Label id="flightInfo" fx:id="flightInfo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="83.0" layoutY="75.0" styleClass="flight_info" text="Flight info should be here" />
+                        <Label id="flightInfo" fx:id="flightInfo" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="83.0" layoutY="57.0" styleClass="flight_info" text="Flight info should be here" />
                         <HBox layoutX="76.0" layoutY="131.0" prefHeight="198.0" prefWidth="432.0" spacing="100.0" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="83.0">
                            <children>
                               <VBox>
