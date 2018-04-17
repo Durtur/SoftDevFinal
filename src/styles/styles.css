@@ -42,6 +42,10 @@
     /*-fx-text-fill: white;*/
 }
 
+.check_box {
+    -fx-text-fill: black;
+}
+
 .search_button:hover {
     -fx-background-color: #A13F00;
 }
