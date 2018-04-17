@@ -140,7 +140,7 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="confirm" layoutX="131.0" layoutY="653.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="48.0" prefWidth="346.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="315.0" />
+                        <Button fx:id="confirm" layoutX="236.0" layoutY="652.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="48.0" prefWidth="329.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="236.0" AnchorPane.rightAnchor="419.0" />
                         <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="507.0" styleClass="flight_info" />
                         <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="539.0" styleClass="flight_info" />
                         <VBox fx:id="additionalPassengers" layoutX="182.0" layoutY="437.0" prefHeight="222.0" prefWidth="548.0">

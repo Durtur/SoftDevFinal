@@ -71,7 +71,6 @@ public class PaymentPageController implements Initializable {
     
     SimpleDateFormat ft = new SimpleDateFormat ("E dd MMM yyyy 'at' HH:mm");
     
-    
     ArrayList<TextField> allSsn,allNameFields;
     @FXML
     private TextField fullNameInput;
@@ -120,6 +119,7 @@ public class PaymentPageController implements Initializable {
     
     private ResourceBundle bundle;
     private Locale locale;
+    
     @FXML
     private VBox additionalPassengers;
     @FXML
@@ -155,7 +155,7 @@ public class PaymentPageController implements Initializable {
         emailSending.setAlignment(Pos.CENTER);
         emailSending.setAlignment(Pos.CENTER);
         
-        //disables confirm button until all TextField are entered 
+        //disables confirm button until all TextFields are entered 
         BooleanBinding booleanBind = fullNameInput.textProperty().isEmpty()
                             .or(ssnInput.textProperty().isEmpty())
                                       .or(cardNumberInput.textProperty().isEmpty())
@@ -174,23 +174,21 @@ public class PaymentPageController implements Initializable {
     }    
     
     
-    private void addPassengerFields(int num){
+    private void addPassengerFields(int num) {
         HBox currentRow;
         TextField nextName, nextSsn;
-        for(int i = 1; i<num;i++){
+        for (int i = 1; i < num; i++) {
             currentRow = new HBox();
-            nextName=new TextField();
-            nextSsn=new TextField();
+            nextName = new TextField();
+            nextSsn = new TextField();
             nextName.setPromptText("Name of passenger " + (i+1));
             nextSsn.setPromptText("Social security number of passenger " + (i+1));
             
             allNameFields.add(nextName);
             allSsn.add(nextSsn);
-            currentRow.getChildren().addAll(nextName,nextSsn);
-            additionalPassengers.getChildren().add(currentRow);
-            
+            currentRow.getChildren().addAll(nextName, nextSsn);
+            additionalPassengers.getChildren().add(currentRow); 
         }
-        
     }
     
     /**
@@ -210,7 +208,6 @@ public class PaymentPageController implements Initializable {
         if (validateName(name) != true) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setHeaderText(null);
-            //alert.setTitle("Invalid ssn");
             alert.setContentText("Please enter a name");
             alert.show();
             return;
@@ -228,7 +225,6 @@ public class PaymentPageController implements Initializable {
         if (validateCheckBags(cb1) != true) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setHeaderText(null);
-            //alert.setTitle("Please select check-in bags");
             alert.setContentText("Please select check-in bags");
             alert.show();
             return;
@@ -237,7 +233,6 @@ public class PaymentPageController implements Initializable {
         if (validateCarryBags(cb2) != true) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setHeaderText(null);
-            //alert.setTitle("Please select carry-on bags");
             alert.setContentText("Please select carry-on bags");
             alert.show();
             return;
@@ -281,7 +276,7 @@ public class PaymentPageController implements Initializable {
         String[] namesToBook = new String[numPassengers];
         String[] ssnToBook = new String[numPassengers];
         
-        for(int i = 0; i < allSsn.size(); i++){
+        for (int i = 0; i < allSsn.size(); i++) {
             namesToBook[i] = allNameFields.get(i).getText();
             ssnToBook[i] = allSsn.get(i).getText();
         }
@@ -289,7 +284,7 @@ public class PaymentPageController implements Initializable {
         ArrayList<Flight> flightsToBook = new ArrayList();
         
         flightsToBook.add(currFlight);
-        if(currFlightBack!=null)flightsToBook.add(currFlightBack);
+        if (currFlightBack != null) flightsToBook.add(currFlightBack);
         
                                     //(ArrayList<Flight> flights, String bookingNo, int noPassengers, int carryOnBags, int checkInBags, String[] fullName, String[] ssn)
         Booking booking = new Booking(flightsToBook, null, numPassengers, numberOfCarryOnBags(), numberOfCheckInBags(), namesToBook, ssnToBook);
@@ -307,7 +302,7 @@ public class PaymentPageController implements Initializable {
                         + "\n" + "Duration " + currFlight.getDuration() + " minutes"
                         + "\n" + "Arrival on " + ft.format(currFlight.getArrivalTime()) + "\n"
                         + "________________ \n";
-                if(currFlightBack != null){
+                if (currFlightBack != null) {
                      body=body+  "Booking number: " + bookingNumbers.substring(5,10)+ "\n"
                         + "Return Flight " + currFlightBack.getFlightNumber() + " - " + currFlightBack.getAirline()
                         + "\n" + "From " + currFlightBack.getDepartureAirport() + " to " + currFlightBack.getArrivalAirport() + "\n" + "On " + ft.format(currFlightBack.getDepartureTime())
@@ -319,7 +314,8 @@ public class PaymentPageController implements Initializable {
                     + "________________ \n"
                     + "Passenger/s: " + numPassengers +"\n";
                  
-                }else{
+                }
+                else {
                     body=body+"________________ \n"
                     + "You have booked: " + numberOfCarryOnBags() + " carry on bags " + "(+" + getPriceOfCOB() + " kr), and " + numberOfCheckInBags() + " checked bags "+ "(+" + getPriceOfCB() +  " kr). \n"
                     + "Total price: " + ((currFlight.getPrice()*numPassengers) + getPriceOfCOB() + getPriceOfCB()) +" kr. \n"   
@@ -327,8 +323,8 @@ public class PaymentPageController implements Initializable {
                     + "Passenger/s: " + numPassengers +"\n";
                  
                 }
-            for(int i = 0; i < allNameFields.size();i++){
-                  body=body + allNameFields.get(i).getText() + " ssn: " + allSsn.get(i).getText() +"\n"; 
+            for (int i = 0; i < allNameFields.size(); i++) {
+                  body = body + allNameFields.get(i).getText() + " ssn: " + allSsn.get(i).getText() + "\n"; 
             }
             
             confirmBook.setText("Booking confirmed!");
@@ -355,14 +351,6 @@ public class PaymentPageController implements Initializable {
             carryBagPrice += 1000;
             checkBagPrice += 1500;
         }
-        /*
-        String z = "0";
-        String a = "1";
-        String b = "2";
-        String c = "3";
-        String d = "4";
-        carryBagsP1.addAll(z, a, b, c, d);
-        checkBagsP1.addAll(z, a, b, c, d);*/
         checkedBagsInput.getItems().addAll(checkBagsP1);
         carryOnBagsInput.getItems().addAll(carryBagsP1);
     }
@@ -375,9 +363,9 @@ public class PaymentPageController implements Initializable {
 
         return numCOB;
     }
-    private int getPriceOfCOB(){  
+    private int getPriceOfCOB() {  
         String priceCOB = carryOnBagsInput.getValue();
-        if("0".equals(priceCOB.substring(0,1))) priceCOB = "000000000";
+        if ("0".equals(priceCOB.substring(0, 1))) priceCOB = "000000000";
         
         int price = Integer.parseInt(priceCOB.substring(4, 8));       
         
@@ -404,26 +392,27 @@ public class PaymentPageController implements Initializable {
     
     
     public void setFlightInfo(ArrayList<Flight> twoFlightsArray, int passengers) {
-        if(passengers>1){
+        if (passengers > 1) {
             addPassengerFields(passengers);
-        }else{
+        }
+        else {
             additionalPassengersLabel.setVisible(false);
         }
         currFlight = twoFlightsArray.get(0);
         currFlightBack = twoFlightsArray.get(1);
         numPassengers = passengers;
 
-        if(currFlightBack != null){
-            flightInfo.setText("Outbound Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
+        if (currFlightBack != null) {
+            flightInfo.setText("Outbound Flight: " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
                     + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
                     + (currFlight.getPrice()*numPassengers) + " kr" + "\n"
                     + "\n"
-                    + "Return Flight " + currFlightBack.getFlightNumber() + " from " + currFlightBack.getDepartureAirport()
+                    + "Return Flight: " + currFlightBack.getFlightNumber() + " from " + currFlightBack.getDepartureAirport()
                     + " to " + currFlightBack.getArrivalAirport() + " on " + ft.format(currFlightBack.getDepartureTime()) + "\nPrice "
                     + (currFlightBack.getPrice()*numPassengers) + " kr");
         }
 
-        if(currFlightBack == null){
+        if (currFlightBack == null) {
             flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
                 + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
                 + (currFlight.getPrice()*numPassengers) + " kr");
