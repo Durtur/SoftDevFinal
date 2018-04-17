@@ -334,14 +334,6 @@ public class PaymentPageController implements Initializable {
             confirmBook.setText("Booking confirmed!");
             emailSending.setText("An email has been sent to " + emailInput1.getText());
             sendFromGMail(from, pass, recip, subject, body);
-            
-            //bookThis.setFlights(currFlight.getFlightNumber());
-            //bookThis.setBookingNo("12345");
-            //bookThis.setNoPassengers();
-            //bookThis.setCarryOnBags(carryOnBagsInput.getValue().substring(0,1));
-            //bookThis.setCheckInBags(checkedBagsInput.getValue().substring(0,1));
-            //bookThis.setFulLName(fullNameInput.getText());
-            //bookThis.setSsn(ssnInput.getText());
         }
     }
     

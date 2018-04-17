@@ -34,12 +34,12 @@
                         </HBox>
                      </children>
                   </AnchorPane>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="841.0" prefWidth="1364.0" SplitPane.resizableWithParent="false">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="841.0" prefWidth="1300.0" SplitPane.resizableWithParent="false">
                      <children>
-                        <Button fx:id="butES" layoutX="560.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnES" text="ES" />
-                        <Label fx:id="labelYourBook" layoutX="83.0" layoutY="20.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
-                        <Label id="flightInfo" fx:id="flightInfo" alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="41.0" layoutY="48.0" prefHeight="118.0" prefWidth="737.0" styleClass="flight_info" text="Flight info should be here" wrapText="true" />
-                        <HBox layoutX="84.0" layoutY="180.0" prefHeight="243.0" prefWidth="674.0" spacing="100.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="225.0">
+                        <Button fx:id="butES" layoutX="742.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnES" text="ES" />
+                        <Label fx:id="labelYourBook" layoutX="182.0" layoutY="21.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
+                        <Label id="flightInfo" fx:id="flightInfo" alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="182.0" layoutY="63.0" prefHeight="106.0" prefWidth="737.0" styleClass="flight_info" text="Flight info should be here" wrapText="true" />
+                        <HBox layoutX="182.0" layoutY="179.0" prefHeight="243.0" prefWidth="437.0" spacing="100.0" AnchorPane.leftAnchor="182.0" AnchorPane.rightAnchor="365.0">
                            <children>
                               <VBox>
                                  <children>
@@ -140,12 +140,12 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="confirm" layoutX="143.0" layoutY="676.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="48.0" prefWidth="346.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="143.0" AnchorPane.rightAnchor="303.0" />
+                        <Button fx:id="confirm" layoutX="131.0" layoutY="653.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="48.0" prefWidth="346.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="131.0" AnchorPane.rightAnchor="315.0" />
                         <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="507.0" styleClass="flight_info" />
                         <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="539.0" styleClass="flight_info" />
-                        <VBox fx:id="additionalPassengers" layoutX="92.0" layoutY="438.0" prefHeight="222.0" prefWidth="606.0">
+                        <VBox fx:id="additionalPassengers" layoutX="182.0" layoutY="437.0" prefHeight="222.0" prefWidth="548.0">
                            <children>
-                              <Label fx:id="additionalPassengersLabel" prefHeight="34.0" prefWidth="175.0" text="Additional Passengers" />
+                              <Label fx:id="additionalPassengersLabel" prefHeight="34.0" prefWidth="175.0" text="Additional Passengers:" />
                            </children></VBox>
                      </children>
                   </AnchorPane>
