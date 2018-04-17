@@ -34,7 +34,7 @@
                         </HBox>
                      </children>
                   </AnchorPane>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="841.0" prefWidth="1300.0" SplitPane.resizableWithParent="false">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="1200.0" prefWidth="1250.0" SplitPane.resizableWithParent="false">
                      <children>
                         <Button fx:id="butES" layoutX="902.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnES" text="ES" />
                         <Label fx:id="labelYourBook" layoutX="274.0" layoutY="21.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
@@ -140,16 +140,13 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="confirm" layoutX="328.0" layoutY="653.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="48.0" prefWidth="329.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="328.0" AnchorPane.rightAnchor="327.0" />
-                        <VBox fx:id="additionalPassengers" layoutX="274.0" layoutY="437.0" prefHeight="155.0" prefWidth="438.0">
+                        <Button fx:id="confirm" layoutX="329.0" layoutY="670.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="48.0" prefWidth="329.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="329.0" AnchorPane.rightAnchor="326.0" />
+                        <VBox fx:id="additionalPassengers" layoutX="274.0" layoutY="437.0" prefHeight="155.0" prefWidth="438.0" styleClass="add_Pass">
                            <children>
-                              <Label fx:id="additionalPassengersLabel" prefHeight="20.0" prefWidth="146.0" styleClass="payment_info" text="Additional Passengers:">
-                                 <padding>
-                                    <Insets bottom="5.0" />
-                                 </padding></Label>
+                              <Label fx:id="additionalPassengersLabel" prefHeight="20.0" prefWidth="146.0" styleClass="payment_info" text="Additional Passengers:" />
                            </children></VBox>
-                        <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="310.0" layoutY="592.0" prefHeight="17.0" prefWidth="365.0" styleClass="flight_info" text="Booking confimred" />
-                        <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="295.0" layoutY="615.0" prefHeight="17.0" prefWidth="397.0" styleClass="flight_info" text="email sent" />
+                        <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="310.0" layoutY="620.0" prefHeight="17.0" prefWidth="365.0" styleClass="flight_info" />
+                        <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="295.0" layoutY="643.0" prefHeight="17.0" prefWidth="397.0" styleClass="flight_info" />
                      </children>
                   </AnchorPane>
               </items>

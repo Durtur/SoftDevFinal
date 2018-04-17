@@ -135,5 +135,9 @@ Class for the panes that contain the listed flights on the booking page.
 
 .payment_info {
     -fx-font-size: 13;
-    -fx-border-color: black;
+    /*-fx-border-color: black;*/
+}
+
+.add_Pass {
+   -fx-spacing: 10;
 }

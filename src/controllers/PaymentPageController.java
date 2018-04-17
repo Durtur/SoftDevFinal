@@ -19,6 +19,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -176,17 +177,27 @@ public class PaymentPageController implements Initializable {
     
     private void addPassengerFields(int num) {
         HBox currentRow;
+        VBox left;
+        VBox right;
         TextField nextName, nextSsn;
         for (int i = 1; i < num; i++) {
             currentRow = new HBox();
+            left = new VBox();
+            right = new VBox();
             nextName = new TextField();
             nextSsn = new TextField();
+            //nextSsn.setPadding(new Insets(10, 10, 10, 10));
+            //currentRow.setmar
+            //nextSsn.align
             nextName.setPromptText("Name of passenger " + (i+1));
             nextSsn.setPromptText("Social security number of passenger " + (i+1));
             
             allNameFields.add(nextName);
             allSsn.add(nextSsn);
-            currentRow.getChildren().addAll(nextName, nextSsn);
+            left.getChildren().addAll(nextName);
+            right.getChildren().addAll(nextSsn);
+            right.setPadding(new Insets(0, 0, 0, 100));
+            currentRow.getChildren().addAll(left, right);
             additionalPassengers.getChildren().add(currentRow); 
         }
     }

@@ -12,9 +12,9 @@ import java.util.Date;
  * @author Símon Örn Reynisson <sor7@hi.is>
  */
 public class Flight implements Comparable{
-    private String airline, flightNumber,departureAirport,arrivalAirport;
-    private int price,duration;
-    private Date departureTime,arrivalTime;
+    private String airline, flightNumber, departureAirport, arrivalAirport;
+    private int price, duration;
+    private Date departureTime, arrivalTime;
 
     public String getAirline() {
         return airline;
