@@ -102,6 +102,7 @@ public class SearchpageController implements Initializable {
             return secondDate.getValue() == null;
 
         }, secondDate.valueProperty()));
+        isOneWay.setStyle("check_box");
         
 
         startAutoComplete();

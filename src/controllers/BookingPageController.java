@@ -17,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -42,6 +43,7 @@ public class BookingPageController implements Initializable {
     SearchpageController searchPage;
     BookingController book;
     PaymentPageController payment;
+    
     @FXML
     private Pane headerPane;
     @FXML
@@ -67,9 +69,18 @@ public class BookingPageController implements Initializable {
      *
      */
     public void passFlightData(GridPane allSearchFields, boolean isOneWay, int noPassengers) {
-        allSearchFields.setLayoutX(20.0);
-        allSearchFields.setLayoutY(10.0);
+        allSearchFields.setLayoutX(200.0);
+        allSearchFields.setLayoutY(180.0);
+        //allSearchFields.setPadding(new Insets(50, 50, 50, 50));
+        //HBox box = new HBox();
+        //box.getChildren().add(allSearchFields);
+        //box.setLayoutX(100.0);
+        //box.setPadding(new Insets(10, 10, 10, 10));
+        
         headerPane.getChildren().add(allSearchFields);
+        
+        //headerPane.setPadding(new Insets(50, 50, 50, 50));
+        
 
         ArrayList<Flight> flights = searchPage.getFoundFlights();
         Flight flight;
@@ -85,6 +96,7 @@ public class BookingPageController implements Initializable {
                     + "\n" + "From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime()
                     + "\n" + flight.getDuration() + " minutes");
             label.setPrefWidth(350);
+            //label.setPadding(new Insets(100, 0, 0, 0));
             labels.add(label);
             label.getStyleClass().add("flight_label");
             int price = flight.getPrice();
@@ -107,6 +119,7 @@ public class BookingPageController implements Initializable {
                 passengersString = " passengers";
             }
             Label priceLabel = new Label();
+            priceLabel.getStyleClass().add("price_label");
             priceLabel.setText(noPassengers + passengersString + " \n" + KronutoluParser.parse(price) + " kr");
             labels.add(priceLabel);
 
@@ -114,11 +127,13 @@ public class BookingPageController implements Initializable {
             tp.getStyleClass().add("bookable_flight_row");
             tp.setPrefWidth(1300);
             tp.setSpacing(50);
+            tp.setLayoutX(300.0);
             for (Label l : labels) {
                 tp.getChildren().add(l);
             }
             tp.getChildren().add(button);
             button.setText("Book");
+            //button.setLayoutY(50);
             button.getStyleClass().add("search_button");
 
             button.setOnAction(new EventHandler() {
@@ -136,6 +151,7 @@ public class BookingPageController implements Initializable {
             });
 
             bookingButtons.add(button);
+            
             bookableFlights.getChildren().add(tp);
         }
 
@@ -185,7 +201,7 @@ public class BookingPageController implements Initializable {
             payment = (PaymentPageController) fxmlLoader.getController();
             payment.setFlightInfo(twoFlightsArray, numPassengers);
             stage.setTitle("Booking details");
-            stage.setScene(new Scene(root, 950, 1400));
+            stage.setScene(new Scene(root, 985, 1400));
             
             stage.show();
 
