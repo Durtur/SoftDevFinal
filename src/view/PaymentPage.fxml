@@ -50,7 +50,7 @@
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
-                                          <TextField fx:id="fullNameInput" layoutX="80.0" layoutY="185.0" />
+                                          <FullNameTextField fx:id="fullNameInput" layoutX="80.0" layoutY="185.0" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="80.0" layoutY="220.0">
@@ -63,7 +63,7 @@
                                                 <Insets top="5.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <TextField fx:id="ssnInput" layoutX="80.0" layoutY="237.0" />
+                                          <NumberTextField fx:id="ssnInput" layoutX="80.0" layoutY="237.0" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -103,7 +103,7 @@
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
-                                          <TextField fx:id="cardNumberInput" layoutX="317.0" layoutY="185.0" />
+                                          <NumberTextField fx:id="cardNumberInput" layoutX="317.0" layoutY="185.0" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="317.0" layoutY="221.0">
@@ -113,7 +113,7 @@
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
-                                          <TextField fx:id="expiryDateInput" layoutX="317.0" layoutY="238.0" />
+                                          <NumberTextField fx:id="expiryDateInput" layoutX="317.0" layoutY="238.0" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="317.0" layoutY="274.0">
@@ -123,7 +123,7 @@
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
-                                          <TextField fx:id="securityNumberInput" layoutX="317.0" layoutY="291.0" />
+                                          <NumberTextField fx:id="securityNumberInput" layoutX="317.0" layoutY="291.0" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -147,6 +147,7 @@
                            </children></VBox>
                         <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="310.0" layoutY="620.0" prefHeight="17.0" prefWidth="365.0" styleClass="flight_info" />
                         <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="295.0" layoutY="643.0" prefHeight="17.0" prefWidth="397.0" styleClass="flight_info" />
+                        <Button fx:id="helpButton" layoutX="828.0" layoutY="16.0" mnemonicParsing="false" onAction="#helpButtonPressed" text="Help" />
                      </children>
                   </AnchorPane>
               </items>
