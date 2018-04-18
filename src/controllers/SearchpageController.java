@@ -83,6 +83,8 @@ public class SearchpageController implements Initializable {
     private GridPane allSearchFields;
     @FXML
     private ComboBox<String> numPassengersCombo;
+    /*@FXML
+    private Button searchHelp;*/
 
     /**
      * Initializes the controller class.
@@ -92,7 +94,11 @@ public class SearchpageController implements Initializable {
         addDateListeners();
         offerManager = new OfferManager();
         search = new SearchController();
-
+        
+        /*searchHelp = new Button();
+        searchHelp.setLayoutX(10.0);
+        searchHelp.setLayoutY(20.0);
+        searchHelp.setText("Help");*/
         //Creates a binding which disables the search button if the fields are not filled out.
 //        searchButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
 //            return departingFrom.getText().length() == 0 || arrivingTo.getText().length() == 0
@@ -102,12 +108,11 @@ public class SearchpageController implements Initializable {
             return secondDate.getValue() == null;
 
         }, secondDate.valueProperty()));
+        isOneWay.getStyleClass().add("check_box");
         
-
         startAutoComplete();
         populateComboBox();
         updateAndShowOffers();
-
     }
 
     public void setStage(Stage stage) {
@@ -125,7 +130,6 @@ public class SearchpageController implements Initializable {
     public boolean isOneWay(){
         return isOneWay.isSelected();
     }
-    
     
     private void startAutoComplete() {
         HashSet<String> autoCompletes = new HashSet<String>(search.getAirports());
@@ -183,9 +187,9 @@ public class SearchpageController implements Initializable {
         firstDate.setDayCellFactory(dayCellFactoryPriorPicker);
 
         //Sets the date for the second picker as 7 days later as the first one. 
-        firstDate.valueProperty().addListener((ov, oldValue, newValue) -> {
-            secondDate.setValue(newValue.plusDays(7));
-        });
+//        firstDate.valueProperty().addListener((ov, oldValue, newValue) -> {
+//            secondDate.setValue(newValue.plusDays(7));
+//        });
     }
 
     /**
@@ -274,26 +278,20 @@ public class SearchpageController implements Initializable {
                     firstDate.setValue(null);
                     secondDate.setValue(null);
                     searchButton.fire();
-                    arrivalField.hidePopup();
-                    
+                    arrivalField.hidePopup();            
                 }
-               
-                
             });
             
-            
-           
-            
             text.setWrapText(true);
-            header.setPrefWidth(100+(offer.getDestination().length()*42));
-            text.setPrefWidth(100+(offer.getDestination().length()*42));
-            StackPane.setAlignment(header,Pos.TOP_LEFT);
-            StackPane.setAlignment(text,Pos.TOP_LEFT);
-            StackPane.setAlignment(price,Pos.BOTTOM_RIGHT);
+            header.setPrefWidth(100 + (offer.getDestination().length() * 42));
+            text.setPrefWidth(100 + (offer.getDestination().length() * 42));
+            StackPane.setAlignment(header, Pos.TOP_LEFT);
+            StackPane.setAlignment(text, Pos.TOP_LEFT);
+            StackPane.setAlignment(price, Pos.BOTTOM_RIGHT);
             text.getStyleClass().add("offer_text");
             header.getStyleClass().add("offer_header");
             price.getStyleClass().add("offer_price");
-            sp.getChildren().addAll(currentView,text,header, price);
+            sp.getChildren().addAll(currentView, text, header, price);
 
             offersGrid.getChildren().add(sp);
             GridPane.setRowIndex(sp, rowIndex);

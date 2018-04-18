@@ -6,20 +6,27 @@
 package controllers;
 
 import database.DatabaseManager;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -31,6 +38,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -70,7 +79,6 @@ public class PaymentPageController implements Initializable {
     private String body; 
     
     SimpleDateFormat ft = new SimpleDateFormat ("E dd MMM yyyy 'at' HH:mm");
-    
     
     ArrayList<TextField> allSsn,allNameFields;
     @FXML
@@ -120,10 +128,14 @@ public class PaymentPageController implements Initializable {
     
     private ResourceBundle bundle;
     private Locale locale;
+    
     @FXML
     private VBox additionalPassengers;
     @FXML
     private Label additionalPassengersLabel;
+    
+    @FXML
+    private Button helpButton;
 
     /**
      * Initializes the controller class.
@@ -155,7 +167,7 @@ public class PaymentPageController implements Initializable {
         emailSending.setAlignment(Pos.CENTER);
         emailSending.setAlignment(Pos.CENTER);
         
-        //disables confirm button until all TextField are entered 
+        //disables confirm button until all TextFields are entered 
         BooleanBinding booleanBind = fullNameInput.textProperty().isEmpty()
                             .or(ssnInput.textProperty().isEmpty())
                                       .or(cardNumberInput.textProperty().isEmpty())
@@ -174,23 +186,31 @@ public class PaymentPageController implements Initializable {
     }    
     
     
-    private void addPassengerFields(int num){
+    private void addPassengerFields(int num) {
         HBox currentRow;
+        VBox left;
+        VBox right;
         TextField nextName, nextSsn;
-        for(int i = 1; i<num;i++){
+        for (int i = 1; i < num; i++) {
             currentRow = new HBox();
-            nextName=new TextField();
-            nextSsn=new TextField();
+            left = new VBox();
+            right = new VBox();
+            nextName = new TextField();
+            nextSsn = new TextField();
+            //nextSsn.setPadding(new Insets(10, 10, 10, 10));
+            //currentRow.setmar
+            //nextSsn.align
             nextName.setPromptText("Name of passenger " + (i+1));
             nextSsn.setPromptText("Social security number of passenger " + (i+1));
             
             allNameFields.add(nextName);
             allSsn.add(nextSsn);
-            currentRow.getChildren().addAll(nextName,nextSsn);
-            additionalPassengers.getChildren().add(currentRow);
-            
+            left.getChildren().addAll(nextName);
+            right.getChildren().addAll(nextSsn);
+            right.setPadding(new Insets(0, 0, 0, 100));
+            currentRow.getChildren().addAll(left, right);
+            additionalPassengers.getChildren().add(currentRow); 
         }
-        
     }
     
     /**
@@ -210,7 +230,6 @@ public class PaymentPageController implements Initializable {
         if (validateName(name) != true) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setHeaderText(null);
-            //alert.setTitle("Invalid ssn");
             alert.setContentText("Please enter a name");
             alert.show();
             return;
@@ -228,7 +247,6 @@ public class PaymentPageController implements Initializable {
         if (validateCheckBags(cb1) != true) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setHeaderText(null);
-            //alert.setTitle("Please select check-in bags");
             alert.setContentText("Please select check-in bags");
             alert.show();
             return;
@@ -237,7 +255,6 @@ public class PaymentPageController implements Initializable {
         if (validateCarryBags(cb2) != true) {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setHeaderText(null);
-            //alert.setTitle("Please select carry-on bags");
             alert.setContentText("Please select carry-on bags");
             alert.show();
             return;
@@ -281,7 +298,7 @@ public class PaymentPageController implements Initializable {
         String[] namesToBook = new String[numPassengers];
         String[] ssnToBook = new String[numPassengers];
         
-        for(int i = 0; i < allSsn.size(); i++){
+        for (int i = 0; i < allSsn.size(); i++) {
             namesToBook[i] = allNameFields.get(i).getText();
             ssnToBook[i] = allSsn.get(i).getText();
         }
@@ -289,7 +306,7 @@ public class PaymentPageController implements Initializable {
         ArrayList<Flight> flightsToBook = new ArrayList();
         
         flightsToBook.add(currFlight);
-        if(currFlightBack!=null)flightsToBook.add(currFlightBack);
+        if (currFlightBack != null) flightsToBook.add(currFlightBack);
         
                                     //(ArrayList<Flight> flights, String bookingNo, int noPassengers, int carryOnBags, int checkInBags, String[] fullName, String[] ssn)
         Booking booking = new Booking(flightsToBook, null, numPassengers, numberOfCarryOnBags(), numberOfCheckInBags(), namesToBook, ssnToBook);
@@ -307,7 +324,7 @@ public class PaymentPageController implements Initializable {
                         + "\n" + "Duration " + currFlight.getDuration() + " minutes"
                         + "\n" + "Arrival on " + ft.format(currFlight.getArrivalTime()) + "\n"
                         + "________________ \n";
-                if(currFlightBack != null){
+                if (currFlightBack != null) {
                      body=body+  "Booking number: " + bookingNumbers.substring(5,10)+ "\n"
                         + "Return Flight " + currFlightBack.getFlightNumber() + " - " + currFlightBack.getAirline()
                         + "\n" + "From " + currFlightBack.getDepartureAirport() + " to " + currFlightBack.getArrivalAirport() + "\n" + "On " + ft.format(currFlightBack.getDepartureTime())
@@ -319,7 +336,8 @@ public class PaymentPageController implements Initializable {
                     + "________________ \n"
                     + "Passenger/s: " + numPassengers +"\n";
                  
-                }else{
+                }
+                else {
                     body=body+"________________ \n"
                     + "You have booked: " + numberOfCarryOnBags() + " carry on bags " + "(+" + getPriceOfCOB() + " kr), and " + numberOfCheckInBags() + " checked bags "+ "(+" + getPriceOfCB() +  " kr). \n"
                     + "Total price: " + ((currFlight.getPrice()*numPassengers) + getPriceOfCOB() + getPriceOfCB()) +" kr. \n"   
@@ -327,8 +345,8 @@ public class PaymentPageController implements Initializable {
                     + "Passenger/s: " + numPassengers +"\n";
                  
                 }
-            for(int i = 0; i < allNameFields.size();i++){
-                  body=body + allNameFields.get(i).getText() + " ssn: " + allSsn.get(i).getText() +"\n"; 
+            for (int i = 0; i < allNameFields.size(); i++) {
+                  body = body + allNameFields.get(i).getText() + " ssn: " + allSsn.get(i).getText() + "\n"; 
             }
             
             confirmBook.setText("Booking confirmed!");
@@ -348,7 +366,7 @@ public class PaymentPageController implements Initializable {
         checkBagsP1.removeAll(checkBagsP1);
         int carryBagPrice = 0;
         int checkBagPrice = 0;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             String a = "" + i + " - " + carryBagPrice + " kr";
             String b = "" + i + " - " + checkBagPrice + " kr";
             carryBagsP1.add(a);
@@ -356,14 +374,6 @@ public class PaymentPageController implements Initializable {
             carryBagPrice += 1000;
             checkBagPrice += 1500;
         }
-        /*
-        String z = "0";
-        String a = "1";
-        String b = "2";
-        String c = "3";
-        String d = "4";
-        carryBagsP1.addAll(z, a, b, c, d);
-        checkBagsP1.addAll(z, a, b, c, d);*/
         checkedBagsInput.getItems().addAll(checkBagsP1);
         carryOnBagsInput.getItems().addAll(carryBagsP1);
     }
@@ -376,9 +386,9 @@ public class PaymentPageController implements Initializable {
 
         return numCOB;
     }
-    private int getPriceOfCOB(){  
+    private int getPriceOfCOB() {  
         String priceCOB = carryOnBagsInput.getValue();
-        if("0".equals(priceCOB.substring(0,1))) priceCOB = "000000000";
+        if ("0".equals(priceCOB.substring(0, 1))) priceCOB = "000000000";
         
         int price = Integer.parseInt(priceCOB.substring(4, 8));       
         
@@ -405,26 +415,27 @@ public class PaymentPageController implements Initializable {
     
     
     public void setFlightInfo(ArrayList<Flight> twoFlightsArray, int passengers) {
-        if(passengers>1){
+        if (passengers > 1) {
             addPassengerFields(passengers);
-        }else{
+        }
+        else {
             additionalPassengersLabel.setVisible(false);
         }
         currFlight = twoFlightsArray.get(0);
         currFlightBack = twoFlightsArray.get(1);
         numPassengers = passengers;
 
-        if(currFlightBack != null){
-            flightInfo.setText("Outbound Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
+        if (currFlightBack != null) {
+            flightInfo.setText("Outbound Flight: " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
                     + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
                     + (currFlight.getPrice()*numPassengers) + " kr" + "\n"
                     + "\n"
-                    + "Return Flight " + currFlightBack.getFlightNumber() + " from " + currFlightBack.getDepartureAirport()
+                    + "Return Flight: " + currFlightBack.getFlightNumber() + " from " + currFlightBack.getDepartureAirport()
                     + " to " + currFlightBack.getArrivalAirport() + " on " + ft.format(currFlightBack.getDepartureTime()) + "\nPrice "
                     + (currFlightBack.getPrice()*numPassengers) + " kr");
         }
 
-        if(currFlightBack == null){
+        if (currFlightBack == null) {
             flightInfo.setText("Flight " + currFlight.getFlightNumber() + " from " + currFlight.getDepartureAirport()
                 + " to " + currFlight.getArrivalAirport() + " on " + ft.format(currFlight.getDepartureTime()) + "\nPrice "
                 + (currFlight.getPrice()*numPassengers) + " kr");
@@ -524,6 +535,43 @@ public class PaymentPageController implements Initializable {
             me.printStackTrace();
         }
         
+    }
+    
+    @FXML
+    private void helpButtonPressed(ActionEvent event) throws IOException {
+        try {
+        /*Parent root = FXMLLoader.load(getClass().getResource("/view/paymentHelp.fxml"));
+        
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setTitle("Payment Help");
+        stage.setScene(scene);
+        stage.show();*/
+        
+        //FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/paymentHelp.fxml"));
+            /*Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            //stage.initModality(Modality.APPLICATION_MODAL);
+            //payment = (PaymentPageController) fxmlLoader.getController();
+            //payment.setFlightInfo(twoFlightsArray, numPassengers);
+            stage.setTitle("Payment Help");
+            stage.setScene(new Scene(root, 200, 200));
+            
+            stage.show();*/
+            Parent root;
+            Stage stage = null;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/paymentHelp.fxml"));
+            root = (Parent) loader.load();
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            //PaymentPageController controller = (PaymentPageController) loader.getController();
+            //controller.setSearchController(this);
+            //controller.passFlightData(allSearchFields, isOneWay.isSelected(), sq.getPassengerNo());
+        } catch (IOException e) {
+            Logger.getLogger(PaymentPageController.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
     
     @FXML private void btnES(ActionEvent event) {

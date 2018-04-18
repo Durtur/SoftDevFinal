@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.*?>
 <?import utils.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentPageController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="800.0" prefHeight="800.0" prefWidth="1000.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.PaymentPageController">
     <stylesheets>
         <URL value="@/styles/styles.css" />
     </stylesheets>
@@ -27,19 +27,19 @@
                            <children>
                               <ImageView fitHeight="214.0" fitWidth="1169.0" layoutX="-1.0" layoutY="6.0" pickOnBounds="true">
                                  <image>
-                                    <Image url="@../styles/img/paymentPhoto.jpeg" />
+                                    <Image url="@../styles/img/photo2.png" />
                                  </image>
                               </ImageView>
                            </children>
                         </HBox>
                      </children>
                   </AnchorPane>
-                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="841.0" prefWidth="1364.0" SplitPane.resizableWithParent="false">
+                <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="1200.0" prefWidth="1250.0" SplitPane.resizableWithParent="false">
                      <children>
-                        <Button fx:id="butES" layoutX="560.0" layoutY="7.0" mnemonicParsing="false" onAction="#btnES" text="ES" />
-                        <Label fx:id="labelYourBook" layoutX="83.0" layoutY="20.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
-                        <Label id="flightInfo" fx:id="flightInfo" alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="41.0" layoutY="48.0" prefHeight="118.0" prefWidth="737.0" styleClass="flight_info" text="Flight info should be here" wrapText="true" />
-                        <HBox layoutX="84.0" layoutY="180.0" prefHeight="243.0" prefWidth="674.0" spacing="100.0" AnchorPane.leftAnchor="84.0" AnchorPane.rightAnchor="225.0">
+                        <Button fx:id="butES" layoutX="902.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnES" text="ES" visible="false" />
+                        <Label fx:id="labelYourBook" layoutX="274.0" layoutY="21.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
+                        <Label id="flightInfo" fx:id="flightInfo" alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="274.0" layoutY="57.0" prefHeight="106.0" prefWidth="737.0" styleClass="flight_info" text="Flight info should be here" wrapText="true" />
+                        <HBox layoutX="274.0" layoutY="179.0" prefHeight="243.0" prefWidth="437.0" spacing="100.0" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0">
                            <children>
                               <VBox>
                                  <children>
@@ -50,7 +50,7 @@
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
-                                          <TextField fx:id="fullNameInput" layoutX="80.0" layoutY="185.0" />
+                                          <FullNameTextField fx:id="fullNameInput" layoutX="80.0" layoutY="185.0" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="80.0" layoutY="220.0">
@@ -63,7 +63,7 @@
                                                 <Insets top="5.0" />
                                              </VBox.margin>
                                           </Label>
-                                          <TextField fx:id="ssnInput" layoutX="80.0" layoutY="237.0" />
+                                          <NumberTextField fx:id="ssnInput" layoutX="80.0" layoutY="237.0" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -103,7 +103,7 @@
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
-                                          <TextField fx:id="cardNumberInput" layoutX="317.0" layoutY="185.0" />
+                                          <NumberTextField fx:id="cardNumberInput" layoutX="317.0" layoutY="185.0" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="317.0" layoutY="221.0">
@@ -113,7 +113,7 @@
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
-                                          <TextField fx:id="expiryDateInput" layoutX="317.0" layoutY="238.0" />
+                                          <NumberTextField fx:id="expiryDateInput" layoutX="317.0" layoutY="238.0" />
                                        </children>
                                     </VBox>
                                     <VBox layoutX="317.0" layoutY="274.0">
@@ -123,7 +123,7 @@
                                                 <Insets bottom="5.0" />
                                              </padding>
                                           </Label>
-                                          <TextField fx:id="securityNumberInput" layoutX="317.0" layoutY="291.0" />
+                                          <NumberTextField fx:id="securityNumberInput" layoutX="317.0" layoutY="291.0" />
                                        </children>
                                     </VBox>
                                     <VBox>
@@ -140,13 +140,14 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Button fx:id="confirm" layoutX="143.0" layoutY="676.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="48.0" prefWidth="346.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="143.0" AnchorPane.rightAnchor="303.0" />
-                        <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="507.0" styleClass="flight_info" />
-                        <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="300.0" layoutY="539.0" styleClass="flight_info" />
-                        <VBox fx:id="additionalPassengers" layoutX="92.0" layoutY="438.0" prefHeight="222.0" prefWidth="606.0">
+                        <Button fx:id="confirm" layoutX="329.0" layoutY="670.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmBooking" prefHeight="48.0" prefWidth="329.0" styleClass="search_button" text="Book" textOverrun="CLIP" AnchorPane.leftAnchor="329.0" AnchorPane.rightAnchor="326.0" />
+                        <VBox fx:id="additionalPassengers" layoutX="274.0" layoutY="437.0" prefHeight="155.0" prefWidth="438.0" styleClass="add_Pass">
                            <children>
-                              <Label fx:id="additionalPassengersLabel" prefHeight="34.0" prefWidth="175.0" text="Additional Passengers" />
+                              <Label fx:id="additionalPassengersLabel" prefHeight="20.0" prefWidth="146.0" styleClass="payment_info" text="Additional Passengers:" />
                            </children></VBox>
+                        <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="310.0" layoutY="620.0" prefHeight="17.0" prefWidth="365.0" styleClass="flight_info" />
+                        <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="295.0" layoutY="643.0" prefHeight="17.0" prefWidth="397.0" styleClass="flight_info" />
+                        <Button fx:id="helpButton" layoutX="828.0" layoutY="16.0" mnemonicParsing="false" onAction="#helpButtonPressed" text="Help" visible="false" />
                      </children>
                   </AnchorPane>
               </items>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -7,21 +8,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="900" prefWidth="1200" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BookingPageController">
+<AnchorPane id="AnchorPane" prefHeight="900.0" prefWidth="1200.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.BookingPageController">
     <stylesheets>
         <URL value="@/styles/styles.css" />
     </stylesheets>
    <children>
-      <StackPane layoutY="164.0" prefHeight="701.0" prefWidth="1194.0">
+      <HBox prefHeight="215.0" prefWidth="1200.0">
          <children>
-            <ScrollPane hbarPolicy="NEVER" prefHeight="547.0" prefWidth="876.0">
+            <ImageView fitHeight="282.0" fitWidth="1195.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../styles/img/photo1.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <StackPane layoutY="280.0" prefHeight="585.0" prefWidth="1194.0">
+         <children>
+            <ScrollPane hbarPolicy="NEVER" prefHeight="554.0" prefWidth="1187.0">
                <content>
-                  <FlowPane fx:id="bookableFlights" prefHeight="637.0" prefWidth="1195.0" />
+                  <FlowPane fx:id="bookableFlights" prefHeight="673.0" prefWidth="1195.0" />
                </content>
             </ScrollPane>
          </children>
       </StackPane>
       <Pane fx:id="headerPane" prefHeight="168.0" prefWidth="896.0" />
-      <Button fx:id="backButton" layoutX="1019.0" layoutY="33.0" mnemonicParsing="false" onAction="#goBack" prefHeight="63.0" prefWidth="66.0" styleClass="back_button" stylesheets="@../styles/styles.css" />
+      <Button fx:id="backButton" layoutX="1031.0" layoutY="174.0" mnemonicParsing="false" onAction="#goBack" prefHeight="63.0" prefWidth="66.0" styleClass="back_button" stylesheets="@../styles/styles.css" />
    </children>
 </AnchorPane>
