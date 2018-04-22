@@ -50,6 +50,7 @@ public class PaymentPageController implements Initializable {
     public Flight currFlightBack;
     int numPassengers;
     
+    
     private static String username = "softdevtest2018";
     private static String password = "throunhugbunadar";
     private String recipient;
