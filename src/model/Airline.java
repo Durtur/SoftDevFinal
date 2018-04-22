@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 /**
@@ -13,9 +8,9 @@ public class Airline {
     private String name;
     private int priority;
     
-    public Airline(String name, int priority){
-        this.name=name;
-        this.priority=priority;
+    public Airline(String name, int priority) {
+        this.name = name;
+        this.priority = priority;
     }
     public String getName() {
         return name;

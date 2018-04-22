@@ -17,7 +17,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -51,14 +50,12 @@ public class BookingPageController implements Initializable {
     @FXML
     private Button backButton;
 
-//    private OnClickListener bookingButtonListener;
     /**
      * Initializes the controller class. This function is automatically called
      * when the controller is created.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         bookingButtons = new ArrayList();
     }
 
@@ -71,17 +68,9 @@ public class BookingPageController implements Initializable {
     public void passFlightData(GridPane allSearchFields, boolean isOneWay, int noPassengers) {
         allSearchFields.setLayoutX(200.0);
         allSearchFields.setLayoutY(180.0);
-        //allSearchFields.setPadding(new Insets(50, 50, 50, 50));
-        //HBox box = new HBox();
-        //box.getChildren().add(allSearchFields);
-        //box.setLayoutX(100.0);
-        //box.setPadding(new Insets(10, 10, 10, 10));
         
         headerPane.getChildren().add(allSearchFields);
         
-        //headerPane.setPadding(new Insets(50, 50, 50, 50));
-        
-
         ArrayList<Flight> flights = searchPage.getFoundFlights();
         Flight flight;
         int flightIndex = 0;
@@ -96,13 +85,13 @@ public class BookingPageController implements Initializable {
                     + "\n" + "From " + flight.getDepartureAirport() + " to " + flight.getArrivalAirport() + "\n" + flight.getDepartureTime()
                     + "\n" + flight.getDuration() + " minutes");
             label.setPrefWidth(350);
-            //label.setPadding(new Insets(100, 0, 0, 0));
             labels.add(label);
             label.getStyleClass().add("flight_label");
             int price = flight.getPrice();
             if (!isOneWay) {
                 i++;
                 flight = flights.get(i);
+                
                 //Here we add a return FLIGHT object
                 Label label2 = new Label();
                 label2.setPrefWidth(350);
@@ -133,7 +122,6 @@ public class BookingPageController implements Initializable {
             }
             tp.getChildren().add(button);
             button.setText("Book");
-            //button.setLayoutY(50);
             button.getStyleClass().add("search_button");
 
             button.setOnAction(new EventHandler() {
@@ -151,10 +139,8 @@ public class BookingPageController implements Initializable {
             });
 
             bookingButtons.add(button);
-            
             bookableFlights.getChildren().add(tp);
         }
-
     }
 
     /**
@@ -165,13 +151,11 @@ public class BookingPageController implements Initializable {
     private void goToPaymentPage(int flightToBookIndex) throws IOException {
 
         try {
-
             ArrayList<Flight> flights = searchPage.getFoundFlights();
             ArrayList<Flight> twoFlightsArray = new ArrayList();
             
             Flight myFlightThere;
             Flight myFlightBack;
-            
                   
             if(!searchPage.isOneWay()){
                 myFlightThere = flights.get(flightToBookIndex*2);
@@ -189,11 +173,6 @@ public class BookingPageController implements Initializable {
             
             int numPassengers = searchPage.getNumPassengers();
 
-            //System.out.println("the flight is " + myFlightThere);
-            //if(!searchPage.isOneWay()){
-            //    System.out.println("the flight is " + myFlightBack);
-            //}
-            
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/PaymentPage.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
@@ -202,7 +181,6 @@ public class BookingPageController implements Initializable {
             payment.setFlightInfo(twoFlightsArray, numPassengers);
             stage.setTitle("Booking details");
             stage.setScene(new Scene(root, 985, 1400));
-            
             stage.show();
 
         } catch (IOException e) {
@@ -229,7 +207,5 @@ public class BookingPageController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(BookingPageController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
-
 }

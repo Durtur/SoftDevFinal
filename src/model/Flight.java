@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.Date;
@@ -81,14 +76,13 @@ public class Flight implements Comparable{
     }
     
     public String toString(){
-        return airline + " : " + flightNumber + "  " + departureAirport +" -> " + arrivalAirport + "  ---- price " + price;
+        return airline + " : " + flightNumber + "  " + departureAirport +" -> " 
+                + arrivalAirport + "  ---- price " + price;
     }
 
     @Override
     public int compareTo(Object o) {
        Flight otherFlight = (Flight)o;
        return this.price - otherFlight.getPrice();
-       
     }
-    
 }

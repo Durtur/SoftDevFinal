@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
 import database.DatabaseManager;
@@ -64,9 +59,7 @@ public class SearchController {
         for (FlightPair f : combinedList) {
             finalList.add(f.flightOut);
             finalList.add(f.flightBack);
-
         }
-
         return finalList;
     }
 
@@ -91,7 +84,6 @@ public class SearchController {
     }
 
     private boolean isSameDay(Date date1, Date date2) {
-
         Calendar cal1 = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
         cal1.setTime(date1);
@@ -101,14 +93,12 @@ public class SearchController {
     }
 
     protected class PriceComparator implements Comparator {
-
         ArrayList<Airline> airlines;
         DatabaseManager db;
 
         public PriceComparator() {
             db = new DatabaseManager();
             airlines = db.getAirlines();
-
         }
 
         @Override
@@ -118,7 +108,8 @@ public class SearchController {
             fl2 = (Flight) o2;
             if (fl1.getPrice() - fl2.getPrice() != 0) {
                 return fl1.getPrice() - fl2.getPrice();
-            } else {
+            } 
+            else {
                 int airl1, airl2;
                 airl1 = 0;
                 airl2 = 0;
@@ -127,9 +118,7 @@ public class SearchController {
                 foundTwo = false;
                 for (int i = 0; i < airlines.size(); i++) {
                     if (airlines.get(i).getName().equals(fl1.getAirline())) {
-
                         airl1 = airlines.get(i).getPriority();
-
                         foundOne = true;
                     }
                     if (airlines.get(i).getName().equals(fl2.getAirline())) {
@@ -139,13 +128,9 @@ public class SearchController {
                     if (foundOne && foundTwo) {
                         break;
                     }
-
                 }
                 return airl2 - airl1;
             }
-
         }
-
     }
-
 }

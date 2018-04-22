@@ -107,6 +107,5 @@ public class AutoCompleteTextField extends TextField {
         }
         entriesPopup.getItems().clear();
         entriesPopup.getItems().addAll(menuItems);
-
     }
 }

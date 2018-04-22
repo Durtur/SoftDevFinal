@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.time.LocalDate;
@@ -17,7 +12,8 @@ public class SearchQuery {
     private String departingFrom, arrivingTo, airline;
     private int passengerNo;
     
-    public SearchQuery(Date firstDate, Date secondDate, String departingFrom, String arrivingTo, String airline, int passengerNo) {
+    public SearchQuery(Date firstDate, Date secondDate, String departingFrom, 
+            String arrivingTo, String airline, int passengerNo) {
     	this.firstDate = firstDate;
     	this.secondDate = secondDate;
     	this.departingFrom = departingFrom;
@@ -75,10 +71,8 @@ public class SearchQuery {
     }
     @Override
     public String toString(){
-        return "From " + departingFrom + " to " + arrivingTo + " on the " + firstDate + ", return on the " + secondDate + " --- Passengers: " + passengerNo;
-    }
-    
-    public void SearchQuery(LocalDate firstDate, LocalDate secondDate, String departingFrom, String arrivingTo, int passengerNo) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "From " + departingFrom + " to " + arrivingTo + " on the " 
+                + firstDate + ", return on the " + secondDate 
+                + " --- Passengers: " + passengerNo;
     }
 }

@@ -3,24 +3,19 @@
  */
 
 /*This class defines the color variables and general style*/
-.root{
-
+.root {
     /*    Fiddle around with this to find a cool style*/
     -fx-base: rgb(200, 200, 200);
     -fx-background: rgb(255, 255, 255);
     -fx-color: white;
-
 }
 
 .search_button {
     -fx-font: 16px Tahoma;
-    /*    -fx-font-weight:bold;*/
     -fx-background-color: #ED6B18;
     -fx-border-radius: 0;
     -fx-width: 85;
     -fx-height: 31;
-
-
 }
 
 .float_left {
@@ -30,16 +25,15 @@
 .header {
     -fx-font: 100px Tahoma;
     -fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%);
-    /*    -fx-stroke: black;*/
     -fx-stroke-width: 2;
 }
 
 .body {
-    /*    -fx-background-color:#005154;*/
+    
 }
 
 .checkbox {
-    /*-fx-text-fill: white;*/
+
 }
 
 .check_box {
@@ -56,11 +50,9 @@
     -fx-border-radius: 0;
     -fx-width: 85;
     -fx-height: 31;
-   
 }
 
 .search_input {
-
 
 }
 
@@ -69,8 +61,6 @@ Class for the panes that contain the listed flights on the booking page.
 */
 .bookable_flight_pane {
     -fx-border-color:black;
-    /*    -fx-widht:600;
-        -fx-height:100;*/
     -fx-min-width:600;
     -fx-min-height:100;
 }
@@ -81,7 +71,6 @@ Class for the panes that contain the listed flights on the booking page.
 
 .offer_text {
     -fx-background-color:rgba(50,50,50,0.5);
-
     -fx-text-fill: white;
     -fx-text-outer-color: black;
     -fx-padding: 100 0 0 0;
@@ -99,7 +88,6 @@ Class for the panes that contain the listed flights on the booking page.
     -fx-position: absolute;
     -fx-top: 0;
     -fx-padding: 0 0 0 100;
-
     -fx-text-fill: white;
     -fx-font-size: 60;
 }
@@ -122,10 +110,6 @@ Class for the panes that contain the listed flights on the booking page.
     -fx-padding: 20 20 20 60;
 }
 
-/*.bookable_fligth_row:first-of-type {
-    -fx-padding-top: 50;
-}*/
-
 .back_button {
     -fx-background-color: transparent;
     -fx-background-image: url("/styles/img/arrowo.png");
@@ -142,10 +126,6 @@ Class for the panes that contain the listed flights on the booking page.
     -fx-padding: 10;
 }
 
-/*.flight_label:first-of-type {
-    -fx-padding-top: 50;
-}*/
-
 /*
 Classes for the items in PaymentPage
 */
@@ -160,7 +140,6 @@ Classes for the items in PaymentPage
 
 .payment_info {
     -fx-font-size: 13;
-    /*-fx-border-color: black;*/
 }
 
 .add_Pass {

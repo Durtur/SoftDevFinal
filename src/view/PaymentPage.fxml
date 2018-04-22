@@ -36,7 +36,6 @@
                   </AnchorPane>
                 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" pickOnBounds="false" prefHeight="1200.0" prefWidth="1250.0" SplitPane.resizableWithParent="false">
                      <children>
-                        <Button fx:id="butES" layoutX="902.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnES" text="ES" visible="false" />
                         <Label fx:id="labelYourBook" layoutX="274.0" layoutY="21.0" styleClass="booking_details" text="Your booking:" textAlignment="RIGHT" />
                         <Label id="flightInfo" fx:id="flightInfo" alignment="TOP_LEFT" contentDisplay="RIGHT" layoutX="274.0" layoutY="57.0" prefHeight="106.0" prefWidth="737.0" styleClass="flight_info" text="Flight info should be here" wrapText="true" />
                         <HBox layoutX="274.0" layoutY="179.0" prefHeight="243.0" prefWidth="437.0" spacing="100.0" AnchorPane.leftAnchor="274.0" AnchorPane.rightAnchor="273.0">
@@ -147,7 +146,6 @@
                            </children></VBox>
                         <Label id="flightInfo" fx:id="confirmBook" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="310.0" layoutY="620.0" prefHeight="17.0" prefWidth="365.0" styleClass="flight_info" />
                         <Label id="flightInfo" fx:id="emailSending" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="295.0" layoutY="643.0" prefHeight="17.0" prefWidth="397.0" styleClass="flight_info" />
-                        <Button fx:id="helpButton" layoutX="828.0" layoutY="16.0" mnemonicParsing="false" onAction="#helpButtonPressed" text="Help" visible="false" />
                      </children>
                   </AnchorPane>
               </items>

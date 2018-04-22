@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package utils;
 
 /**
@@ -19,37 +14,31 @@ public class KronutoluParser {
         for (int j = 1; j < chopped.length; j++) {
             s += "," + chopped[j];
         }
-        
         return s;
     }
     
      public static String parse(String s) {
-       
         String[] chopped = chopUp(s);
-        if(chopped==null)return s;
+        if(chopped == null) return s;
         s = chopped[0];
         for (int j = 1; j < chopped.length; j++) {
             s += "," + chopped[j];
         }
-
         return s;
     }
 
-
     public static int unParse(String s) {
         String sb = "";
-   
         for (int i = 0; i <  s.length(); i++) {
-            if(!s.substring(i,i+1).equals(".")){
-                sb+=s.substring(i,i+1);
+            if(!s.substring(i, i+1).equals(".")) {
+                sb += s.substring(i, i+1);
             }
         }
-
         return Integer.valueOf(sb);
     }
 
     private static String[] chopUp(String s) {
-        if(s==null)return null;
+        if(s == null) return null;
         int klukka = 0;
         int staerd = s.length() / 3;
         if (s.length() % 3 != 0) {
@@ -70,11 +59,9 @@ public class KronutoluParser {
             klukka++;
         }
         return chopped;
-
     }
 
     public static void main(String[] args) {
         System.out.println(parse(500000000)); //500.000.000
     }
-
 }

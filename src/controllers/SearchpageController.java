@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
-import java.awt.FlowLayout;
 import java.io.IOException;
 import java.net.URL;
 import java.time.Instant;
@@ -26,7 +20,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -42,7 +35,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Flight;
@@ -60,11 +52,11 @@ public class SearchpageController implements Initializable {
 
     //Data variables
     ArrayList<Flight> foundFlights;
-    ///
     Stage stage;  //Refers to the current window
     SearchController search; //This will do the searching. 
     AutoCompleteTextField departureField, arrivalField;
     OfferManager offerManager;
+    
     @FXML
     private DatePicker firstDate;
     @FXML
@@ -83,8 +75,6 @@ public class SearchpageController implements Initializable {
     private GridPane allSearchFields;
     @FXML
     private ComboBox<String> numPassengersCombo;
-    /*@FXML
-    private Button searchHelp;*/
 
     /**
      * Initializes the controller class.
@@ -95,15 +85,6 @@ public class SearchpageController implements Initializable {
         offerManager = new OfferManager();
         search = new SearchController();
         
-        /*searchHelp = new Button();
-        searchHelp.setLayoutX(10.0);
-        searchHelp.setLayoutY(20.0);
-        searchHelp.setText("Help");*/
-        //Creates a binding which disables the search button if the fields are not filled out.
-//        searchButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
-//            return departingFrom.getText().length() == 0 || arrivingTo.getText().length() == 0
-//                    || firstDate.getValue() == null || (!isOneWay.isSelected() && secondDate.getValue() == null);
-//        }, arrivingTo.textProperty(), departingFrom.textProperty(), firstDate.valueProperty(), secondDate.valueProperty(), isOneWay.selectedProperty()));
         isOneWay.selectedProperty().bind(Bindings.createBooleanBinding(() -> {
             return secondDate.getValue() == null;
 
@@ -119,15 +100,15 @@ public class SearchpageController implements Initializable {
         this.stage = stage;
     }
     
-    public Stage getStage(){
+    public Stage getStage() {
         return stage;
     }
     
-    public int getNumPassengers(){
+    public int getNumPassengers() {
         return Integer.valueOf(numPassengersCombo.getSelectionModel().getSelectedItem());
     }
     
-    public boolean isOneWay(){
+    public boolean isOneWay() {
         return isOneWay.isSelected();
     }
     
@@ -206,18 +187,18 @@ public class SearchpageController implements Initializable {
         firstDateD = parseDateFromLocalDate(firstDate.getValue());
         secondDateD = parseDateFromLocalDate(secondDate.getValue());
 
-        SearchQuery sq = new SearchQuery(firstDateD, secondDateD, departingFrom.getText(), arrivingTo.getText(), null, Integer.valueOf(numPassengersCombo.getSelectionModel().getSelectedItem()));
-  
+        SearchQuery sq = new SearchQuery(firstDateD, secondDateD, 
+                departingFrom.getText(), arrivingTo.getText(), null, 
+                Integer.valueOf(numPassengersCombo.getSelectionModel()
+                        .getSelectedItem()));
 
         foundFlights = search.search(sq);
 
         Parent root;
         //This opens the booking page
         try {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/BookingPage.fxml"));
             root = (Parent) loader.load();
-
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
@@ -239,7 +220,6 @@ public class SearchpageController implements Initializable {
         for (int i = 1; i < 6; i++) {
             arr.add(String.valueOf(i));
         }
-
         numPassengersCombo.getItems().addAll(arr);
         numPassengersCombo.getSelectionModel().selectFirst();
     }
@@ -262,7 +242,6 @@ public class SearchpageController implements Initializable {
         StackPane sp;
         int rowIndex = 0;
         for (Offer offer : offers) {
-
             sp = new StackPane();
             currentView = new ImageView(offer.getImage());
             text = new Label(offer.getText());
@@ -296,14 +275,10 @@ public class SearchpageController implements Initializable {
             offersGrid.getChildren().add(sp);
             GridPane.setRowIndex(sp, rowIndex);
             rowIndex++;
-
         }
 
         offersGrid.setPrefHeight(offers.size() * offers.get(0).getImage().getHeight());
         AnchorPane offerParent = (AnchorPane) offersGrid.getParent();
         offerParent.setPrefHeight(offers.size() * offers.get(0).getImage().getHeight());
     }
-
-    
-
 }

@@ -22,9 +22,7 @@ public class FlightSearcher extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Searchpage.fxml"));
         Parent root = (Parent)loader.load();
-                
-                
-        
+
         Scene scene = new Scene(root);
         
         stage.setScene(scene);

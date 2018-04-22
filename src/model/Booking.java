@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package model;
 
 import java.util.ArrayList;
@@ -17,7 +12,8 @@ public class Booking {
     private int noPassengers, carryOnBags, checkInBags;
     private String[] fullName, ssn;
     
-    public Booking(ArrayList<Flight> flights, String bookingNo, int noPassengers, int carryOnBags, int checkInBags, String[] fullName, String[] ssn) {
+    public Booking(ArrayList<Flight> flights, String bookingNo, int noPassengers, 
+            int carryOnBags, int checkInBags, String[] fullName, String[] ssn) {
     	this.flights = flights;
     	this.bookingNo = bookingNo;
     	this.noPassengers = noPassengers;

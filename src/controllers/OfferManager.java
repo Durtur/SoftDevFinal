@@ -1,16 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controllers;
 
 import database.DatabaseManager;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.image.Image;
 import model.Offer;
 
@@ -44,18 +38,11 @@ public class OfferManager {
         InputStream is = null;
         for (String[] arr : offerStrings) {
             try {
-//                double requestedWidth,
-//             double requestedHeight,
-//             boolean preserveRatio,
-//             boolean smooth,
-//             boolean backgroundLoading
                 currentImg = new Image(OfferManager.class.getClassLoader().getResourceAsStream("styles/img/" + arr[2]),goodWidth,goodHeight,true,false);
-                
                 offers.add(new Offer(currentImg, arr[1], arr[0],db.findCheapest("Keflavík",arr[0])));
             } catch (Exception ex) {
-
+                Logger.getLogger(BookingPageController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
         return offers;
     }

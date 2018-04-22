@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package database;
 
 import java.sql.Connection;
@@ -17,7 +12,6 @@ import java.util.logging.Logger;
 import model.Airline;
 import model.Booking;
 import model.Flight;
-import model.SearchQuery;
 
 /**
  * Connects to an existing database (Not ready).
@@ -25,8 +19,6 @@ import model.SearchQuery;
  * @author Símon Örn Reynisson <sor7@hi.is>
  */
 public class DatabaseManager {
-
-//    private final String dbName = getClass().getResource("flightsearch.db").toString();
     private final String dbName = "flightsearch.db";
     private static int lastIndex = 0;
 
@@ -38,21 +30,10 @@ public class DatabaseManager {
      */
     private Connection connect() throws Exception {
         Connection conn = null;
-        /*
-        try {
-            // Reynum fyrst PostgreSQL
-            Class.forName("org.postgresql.Driver");	// fyrir PostgreSQL
-            java.util.Properties props = new java.util.Properties();
-            conn = DriverManager.getConnection("jdbc:postgresql:" + dbName, props);
-        } catch (Exception e) {*/
-        // Höldum bara áfram og reynum SQLite
         try {
             Class.forName("org.sqlite.JDBC");		// fyrir SQLite
-            // conn = DriverManager.getConnection("jdbc:sqlite::resource:" + dbName );
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbName);
         } catch (Exception e) {
-            // Höldum áfram og reynum ODBC
-            //conn = DriverManager.getConnection("jdbc:odbc:" + dbName);
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, e);
         }
         return conn;
@@ -67,9 +48,7 @@ public class DatabaseManager {
             ResultSet r = p.executeQuery();
             while (r.next()) {
                 offers.add(new String[]{r.getString(1), r.getString(2), r.getString(3)});
-
             }
-
         } catch (Exception ex) {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -92,9 +71,7 @@ public class DatabaseManager {
             while (r.next()) {
                 currentAirline = new Airline(r.getString(1), r.getInt(2));
                 airlines.add(currentAirline);
-
             }
-
         } catch (Exception ex) {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -109,18 +86,16 @@ public class DatabaseManager {
             PreparedStatement p = conn.prepareStatement("Select * from Airports");
             ResultSet r = p.executeQuery();
             while (r.next()) {
-
                 airports.add(r.getString(1));
-
             }
-
         } catch (Exception ex) {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return airports;
     }
 
-    public ArrayList<Flight> getFlights(String departingFrom, String arrivingTo, Date departureTime, int passengerNo) {
+    public ArrayList<Flight> getFlights(String departingFrom, String arrivingTo, 
+            Date departureTime, int passengerNo) {
         ArrayList<Flight> flights = new ArrayList();
         Flight currentFlight;
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -135,7 +110,8 @@ public class DatabaseManager {
                 p = conn.prepareStatement(sql);
                 p.setString(1, departingFrom);
                 p.setInt(2, passengerNo);
-            } else {
+            } 
+            else {
                 sql = "Select * from Flights WHERE departureAirport=? AND arrivalAirport=? AND FreeSeats>?";
                 p = conn.prepareStatement(sql);
                 p.setString(1, departingFrom);
@@ -155,20 +131,17 @@ public class DatabaseManager {
                 currentFlight.setPrice(r.getInt(7));
                 currentFlight.setDuration(r.getInt(8));
                 flights.add(currentFlight);
-
             }
         } catch (Exception ex) {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return flights;
-
     }
 
     private String getNextAvailableBookingNo(String flightNumber, Connection conn) {
         String nextBookingNumber = null;
         int lastCapitalLetterAscii = 90;
         try {
-            
             String sql = "Select min(bookingNo) from Bookings where flightNumber=?";
             PreparedStatement p = conn.prepareStatement(sql);
             p.setString(1, flightNumber);
@@ -191,9 +164,7 @@ public class DatabaseManager {
                 StringBuilder morph = new StringBuilder(bookingNo);
                 morph.setCharAt(i, (char) charIndex);
                 nextBookingNumber = morph.toString();
-
             }
-
         } catch (Exception ex) {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -206,13 +177,10 @@ public class DatabaseManager {
             PreparedStatement p = conn.prepareStatement(sql);
             p.setInt(1, numPassengers);
             p.setString(2, flightNo);
-
             p.executeUpdate();
-
         } catch (Exception ex) {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public String addBooking(Booking booking) {
@@ -221,7 +189,9 @@ public class DatabaseManager {
             ArrayList<Flight> flightsToBook = booking.getFlights();
             String finalBooking = "";
             for (Flight f : flightsToBook) {
-                String sql = "INSERT INTO Bookings(flightNumber,bookingNo,noPassengers,fullName,ssn,carryOnBags,checkInBags) VALUES(?,?,?,?,?,?,?)";
+                String sql = "INSERT INTO Bookings(flightNumber,bookingNo,"
+                        + "noPassengers,fullName,ssn,carryOnBags,checkInBags) "
+                        + "VALUES(?,?,?,?,?,?,?)";
                 PreparedStatement p = conn.prepareStatement(sql);
                 String bookingNo = getNextAvailableBookingNo(f.getFlightNumber(), conn);
                 finalBooking+=bookingNo;
@@ -245,7 +215,6 @@ public class DatabaseManager {
             Logger.getLogger(DatabaseManager.class.getName()).log(Level.SEVERE, null, ex);
             return "error";
         }
-
     }
 
     /**
@@ -259,7 +228,9 @@ public class DatabaseManager {
             ArrayList<Airline> airlines = db.getAirlines();
             ArrayList<String> airports = db.getAirports();
 
-            String sql = "INSERT INTO Flights(airline,flightNumber,departureTime,arrivalTime,departureAirport,arrivalAirport,price,duration) VALUES(?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO Flights(airline,flightNumber,"
+                    + "departureTime,arrivalTime,departureAirport,arrivalAirport,"
+                    + "price,duration) VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement p = conn.prepareStatement(sql);
             String currentDestination, currentDeparture, airlinePrefix;
             int flightNo = 111;
@@ -300,16 +271,8 @@ public class DatabaseManager {
                     p.setInt(8, flightDuration);
 
                     p.executeUpdate();
-
                 }
-
             }
-//            
-//            p.setString(1, name);
-//            p.setDouble(2, capacity);
-//            p.executeUpdate();
-//            
-
         } catch (Exception ex) {
             Logger.getLogger(DatabaseManager.class
                     .getName()).log(Level.SEVERE, null, ex);
@@ -334,7 +297,6 @@ public class DatabaseManager {
             while (r.next()) {
                 System.out.println(r.getString(1));
                 return r.getString(1);
-
             }
 
         } catch (Exception ex) {
@@ -342,7 +304,6 @@ public class DatabaseManager {
                     .getName()).log(Level.SEVERE, null, ex);
         }
         return "not available";
-
     }
 
     public static void main(String[] args) {
@@ -358,8 +319,5 @@ public class DatabaseManager {
    
         Booking testBook = new Booking(testFlights, "", 2, 2, 2, new String[]{"Joe", "Mary"}, new String[]{"000124125", "00515"});
         db.addBooking(testBook);
-
-        //db.generateRandomFlights();
     }
-
 }
